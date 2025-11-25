@@ -109,6 +109,9 @@ function UserMenuPage() {
           <div className="menu-grid">
             {menuItems.map((item) => (
               <div key={item._id} className="menu-card">
+                {item.image && (
+                  <img src={item.image} alt={item.name} className="menu-item-image" />
+                )}
                 <h3>{item.name}</h3>
                 <p>{item.description}</p>
                 <p className="price">₹{item.price}</p>
