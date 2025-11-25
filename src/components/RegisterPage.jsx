@@ -24,18 +24,38 @@ function RegisterPage() {
 
   const handleSubmit = async (e) => {
     e.preventDefault()
+    setError("")
+
+    // Validation
+    if (!formData.name.trim()) {
+      setError("Name is required")
+      return
+    }
+
+    if (!formData.email.trim()) {
+      setError("Email is required")
+      return
+    }
+
+    if (formData.password.length < 6) {
+      setError("Password must be at least 6 characters")
+      return
+    }
+
     try {
       const response = await axios.post("http://localhost:5000/api/auth/register", {
-        name: formData.name,
-        email: formData.email,
+        name: formData.name.trim(),
+        email: formData.email.trim().toLowerCase(),
         password: formData.password,
         tableNumber: formData.tableNumber ? Number.parseInt(formData.tableNumber) : null,
         role: "user",
       })
 
+      // Auto-login after successful registration
       localStorage.setItem("token", response.data.token)
       localStorage.setItem("user", JSON.stringify(response.data.user))
 
+      // Navigate to user menu
       navigate("/user-menu")
     } catch (err) {
       setError(err.response?.data?.message || "Registration failed")

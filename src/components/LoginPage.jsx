@@ -13,9 +13,22 @@ function LoginPage() {
 
   const handleSubmit = async (e) => {
     e.preventDefault()
+    setError("")
+
+    // Validation
+    if (!email.trim()) {
+      setError("Email is required")
+      return
+    }
+
+    if (!password) {
+      setError("Password is required")
+      return
+    }
+
     try {
       const response = await axios.post("http://localhost:5000/api/auth/login", {
-        email,
+        email: email.trim().toLowerCase(),
         password,
       })
 
