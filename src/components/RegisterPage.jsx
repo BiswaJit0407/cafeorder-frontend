@@ -51,13 +51,24 @@ function RegisterPage() {
         role: "user",
       })
 
+      console.log("Registration response:", response.data)
+
+      // Check if token exists
+      if (!response.data.token) {
+        setError("Registration successful but no token received")
+        return
+      }
+
       // Auto-login after successful registration
       localStorage.setItem("token", response.data.token)
       localStorage.setItem("user", JSON.stringify(response.data.user))
 
+      console.log("Token saved, navigating to menu...")
+
       // Navigate to user menu
       navigate("/user-menu")
     } catch (err) {
+      console.error("Registration error:", err)
       setError(err.response?.data?.message || "Registration failed")
     }
   }
