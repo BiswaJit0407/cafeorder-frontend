@@ -1,0 +1,213 @@
+.admin-dashboard {
+  min-height: 100vh;
+  background: #f5f5f5;
+  font-family: "Arial", sans-serif;
+  padding: 20px;
+}
+
+.admin-header {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  padding: 30px;
+  border-radius: 8px;
+  margin-bottom: 30px;
+  text-align: center;
+}
+
+.filter-section {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 30px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.filter-section button {
+  padding: 10px 20px;
+  background: white;
+  border: 2px solid #667eea;
+  color: #667eea;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.filter-section button.active {
+  background: #667eea;
+  color: white;
+}
+
+.orders-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+  gap: 20px;
+}
+
+.order-card {
+  background: white;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.order-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+  border-bottom: 2px solid #f0f0f0;
+  padding-bottom: 10px;
+}
+
+.status-badge {
+  padding: 5px 10px;
+  background: #667eea;
+  color: white;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: bold;
+  text-transform: uppercase;
+}
+
+.order-details {
+  margin: 15px 0;
+}
+
+.order-details p {
+  margin: 8px 0;
+  color: #333;
+}
+
+.order-items {
+  background: #f9f9f9;
+  padding: 10px;
+  border-radius: 5px;
+  margin: 15px 0;
+}
+
+.order-items ul {
+  margin: 10px 0 0 20px;
+  padding: 0;
+}
+
+.order-items li {
+  margin: 5px 0;
+  color: #666;
+}
+
+.bill-preview {
+  background: #fff9c4;
+  padding: 15px;
+  border: 1px solid #f9d84e;
+  border-radius: 5px;
+  margin: 15px 0;
+  font-size: 12px;
+  max-height: 250px;
+  overflow-y: auto;
+}
+
+.bill {
+  border: 1px solid #ddd;
+  padding: 10px;
+  background: white;
+  border-radius: 3px;
+}
+
+.bill h3 {
+  text-align: center;
+  margin: 0 0 10px;
+}
+
+.bill h4 {
+  margin: 10px 0 5px;
+  font-size: 13px;
+}
+
+.bill p {
+  margin: 5px 0;
+  font-size: 11px;
+}
+
+.bill-items {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 11px;
+  margin: 10px 0;
+}
+
+.bill-items th,
+.bill-items td {
+  border: 1px solid #ddd;
+  padding: 5px;
+  text-align: left;
+}
+
+.bill-items th {
+  background: #f0f0f0;
+}
+
+.bill-total {
+  text-align: right;
+  margin: 10px 0;
+}
+
+.status-controls {
+  margin: 15px 0;
+}
+
+.status-controls select {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  font-size: 14px;
+}
+
+.print-btn {
+  width: 100%;
+  padding: 10px;
+  background: #2196f3;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-top: 10px;
+}
+
+.print-btn:hover {
+  background: #0b7dda;
+}
+
+@media (max-width: 768px) {
+  .orders-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .filter-section {
+    flex-direction: column;
+  }
+
+  .filter-section button {
+    width: 100%;
+  }
+}
+
+@media print {
+  body {
+    background: white;
+  }
+
+  .admin-header,
+  .filter-section,
+  .order-card,
+  .status-controls,
+  .print-btn {
+    display: none;
+  }
+
+  .bill-preview {
+    background: white;
+    border: none;
+    page-break-inside: avoid;
+  }
+}
