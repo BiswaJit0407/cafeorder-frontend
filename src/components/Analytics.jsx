@@ -3,7 +3,22 @@
 import { useState, useEffect } from "react"
 import axios from "axios"
 import { useNavigate } from "react-router-dom"
+import {
+  Chart as ChartJS,
+  CategoryScale,
+  LinearScale,
+  BarElement,
+  LineElement,
+  PointElement,
+  ArcElement,
+  Title,
+  Tooltip,
+  Legend,
+} from "chart.js"
+import { Bar, Line, Doughnut } from "react-chartjs-2"
 import "./Analytics.css"
+
+ChartJS.register(CategoryScale, LinearScale, BarElement, LineElement, PointElement, ArcElement, Title, Tooltip, Legend)
 
 function Analytics() {
   const [analytics, setAnalytics] = useState(null)
@@ -111,63 +126,143 @@ function Analytics() {
             <div className="charts-section">
               <div className="chart-card">
                 <h3>Orders by Status</h3>
-                <div className="status-bars">
-                  {Object.entries(analytics.ordersByStatus).map(([status, count]) => (
-                    <div key={status} className="status-bar-item">
-                      <div className="status-bar-label">
-                        <span>{status}</span>
-                        <span>{count}</span>
-                      </div>
-                      <div className="status-bar-bg">
-                        <div
-                          className="status-bar-fill"
-                          style={{
-                            width: `${analytics.totalOrders > 0 ? (count / analytics.totalOrders) * 100 : 0}%`,
-                          }}
-                        />
-                      </div>
-                    </div>
-                  ))}
+                <div className="chart-wrapper">
+                  <Doughnut
+                    data={{
+                      labels: Object.keys(analytics.ordersByStatus).map((s) => s.charAt(0).toUpperCase() + s.slice(1)),
+                      datasets: [
+                        {
+                          label: "Orders",
+                          data: Object.values(analytics.ordersByStatus),
+                          backgroundColor: [
+                            "rgba(255, 152, 0, 0.8)",
+                            "rgba(33, 150, 243, 0.8)",
+                            "rgba(76, 175, 80, 0.8)",
+                            "rgba(156, 39, 176, 0.8)",
+                            "rgba(0, 188, 212, 0.8)",
+                            "rgba(244, 67, 54, 0.8)",
+                          ],
+                          borderColor: [
+                            "rgba(255, 152, 0, 1)",
+                            "rgba(33, 150, 243, 1)",
+                            "rgba(76, 175, 80, 1)",
+                            "rgba(156, 39, 176, 1)",
+                            "rgba(0, 188, 212, 1)",
+                            "rgba(244, 67, 54, 1)",
+                          ],
+                          borderWidth: 2,
+                        },
+                      ],
+                    }}
+                    options={{
+                      responsive: true,
+                      maintainAspectRatio: true,
+                      plugins: {
+                        legend: {
+                          position: "bottom",
+                        },
+                      },
+                    }}
+                  />
                 </div>
               </div>
 
               <div className="chart-card">
                 <h3>Top Selling Items</h3>
-                <div className="top-items-list">
-                  {analytics.topItems.map((item, index) => (
-                    <div key={index} className="top-item">
-                      <div className="item-rank">{index + 1}</div>
-                      <div className="item-details">
-                        <p className="item-name">{item.name}</p>
-                        <p className="item-stats">
-                          {item.quantity} sold • {formatCurrency(item.revenue)}
-                        </p>
-                      </div>
-                    </div>
-                  ))}
-                  {analytics.topItems.length === 0 && <p className="no-data">No items sold yet</p>}
+                <div className="chart-wrapper">
+                  {analytics.topItems.length > 0 ? (
+                    <Bar
+                      data={{
+                        labels: analytics.topItems.map((item) => item.name),
+                        datasets: [
+                          {
+                            label: "Quantity Sold",
+                            data: analytics.topItems.map((item) => item.quantity),
+                            backgroundColor: "rgba(102, 126, 234, 0.8)",
+                            borderColor: "rgba(102, 126, 234, 1)",
+                            borderWidth: 2,
+                          },
+                        ],
+                      }}
+                      options={{
+                        responsive: true,
+                        maintainAspectRatio: true,
+                        plugins: {
+                          legend: {
+                            display: false,
+                          },
+                        },
+                        scales: {
+                          y: {
+                            beginAtZero: true,
+                            ticks: {
+                              stepSize: 1,
+                            },
+                          },
+                        },
+                      }}
+                    />
+                  ) : (
+                    <p className="no-data">No items sold yet</p>
+                  )}
                 </div>
               </div>
             </div>
 
             <div className="revenue-chart-card">
-              <h3>Revenue by Day</h3>
-              <div className="revenue-chart">
-                {Object.entries(analytics.revenueByDay).map(([date, revenue]) => (
-                  <div key={date} className="revenue-bar-item">
-                    <div className="revenue-bar-label">{date}</div>
-                    <div className="revenue-bar-bg">
-                      <div
-                        className="revenue-bar-fill"
-                        style={{
-                          width: `${(revenue / Math.max(...Object.values(analytics.revenueByDay))) * 100}%`,
-                        }}
-                      />
-                    </div>
-                    <div className="revenue-bar-value">{formatCurrency(revenue)}</div>
-                  </div>
-                ))}
-                {Object.keys(analytics.revenueByDay).length === 0 && <p className="no-data">No revenue data yet</p>}
+              <h3>Revenue Trend</h3>
+              <div className="chart-wrapper">
+                {Object.keys(analytics.revenueByDay).length > 0 ? (
+                  <Line
+                    data={{
+                      labels: Object.keys(analytics.revenueByDay),
+                      datasets: [
+                        {
+                          label: "Revenue (₹)",
+                          data: Object.values(analytics.revenueByDay),
+                          fill: true,
+                          backgroundColor: "rgba(76, 175, 80, 0.2)",
+                          borderColor: "rgba(76, 175, 80, 1)",
+                          borderWidth: 3,
+                          tension: 0.4,
+                          pointRadius: 5,
+                          pointBackgroundColor: "rgba(76, 175, 80, 1)",
+                          pointBorderColor: "#fff",
+                          pointBorderWidth: 2,
+                        },
+                      ],
+                    }}
+                    options={{
+                      responsive: true,
+                      maintainAspectRatio: true,
+                      plugins: {
+                        legend: {
+                          display: true,
+                          position: "top",
+                        },
+                        tooltip: {
+                          callbacks: {
+                            label: function (context) {
+                              return `Revenue: ₹${context.parsed.y.toFixed(2)}`
+                            },
+                          },
+                        },
+                      },
+                      scales: {
+                        y: {
+                          beginAtZero: true,
+                          ticks: {
+                            callback: function (value) {
+                              return "₹" + value
+                            },
+                          },
+                        },
+                      },
+                    }}
+                  />
+                ) : (
+                  <p className="no-data">No revenue data yet</p>
+                )}
               </div>
             </div>
           </>
