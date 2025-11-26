@@ -36,7 +36,8 @@ function UserMenuPage() {
     }
 
     fetchMenu()
-  }, [token, user])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
   useEffect(() => {
     if (selectedCategory === "All") {
