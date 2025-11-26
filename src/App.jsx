@@ -4,6 +4,7 @@ import RegisterPage from "./components/RegisterPage"
 import UserMenuPage from "./components/UserMenuPage"
 import UserOrders from "./components/UserOrders"
 import AdminDashboard from "./components/AdminDashboard"
+import Analytics from "./components/Analytics"
 
 function ProtectedRoute({ component, role }) {
   const token = localStorage.getItem("token")
@@ -29,6 +30,7 @@ function App() {
         <Route path="/user-menu" element={<ProtectedRoute component={<UserMenuPage />} role="user" />} />
         <Route path="/my-orders" element={<ProtectedRoute component={<UserOrders />} role="user" />} />
         <Route path="/admin-dashboard" element={<ProtectedRoute component={<AdminDashboard />} role="admin" />} />
+        <Route path="/analytics" element={<ProtectedRoute component={<Analytics />} role="admin" />} />
         <Route path="/" element={<Navigate to="/login" />} />
       </Routes>
     </Router>
