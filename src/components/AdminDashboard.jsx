@@ -108,6 +108,9 @@ function AdminDashboard() {
             <p>Welcome, {user?.name}</p>
           </div>
           <div className="header-buttons">
+            <button className="menu-btn" onClick={() => navigate("/menu-management")}>
+              Menu
+            </button>
             <button className="analytics-btn" onClick={() => navigate("/analytics")}>
               Analytics
             </button>
