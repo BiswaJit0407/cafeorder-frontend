@@ -111,9 +111,14 @@ function UserMenuPage() {
             <h1>Restaurant Menu</h1>
             <p>Welcome, {user?.name}</p>
           </div>
-          <button className="logout-btn" onClick={handleLogout}>
-            Logout
-          </button>
+          <div className="header-buttons">
+            <button className="orders-btn" onClick={() => navigate("/my-orders")}>
+              My Orders
+            </button>
+            <button className="logout-btn" onClick={handleLogout}>
+              Logout
+            </button>
+          </div>
         </div>
       </div>
 

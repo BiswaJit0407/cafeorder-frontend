@@ -20,6 +20,12 @@
   margin: 0 auto;
 }
 
+.header-buttons {
+  display: flex;
+  gap: 10px;
+}
+
+.orders-btn,
 .logout-btn {
   background: rgba(255, 255, 255, 0.2);
   color: white;
@@ -31,6 +37,7 @@
   transition: all 0.3s ease;
 }
 
+.orders-btn:hover,
 .logout-btn:hover {
   background: white;
   color: #667eea;

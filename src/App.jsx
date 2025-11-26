@@ -2,6 +2,7 @@ import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-d
 import LoginPage from "./components/LoginPage"
 import RegisterPage from "./components/RegisterPage"
 import UserMenuPage from "./components/UserMenuPage"
+import UserOrders from "./components/UserOrders"
 import AdminDashboard from "./components/AdminDashboard"
 
 function ProtectedRoute({ component, role }) {
@@ -26,6 +27,7 @@ function App() {
         <Route path="/login" element={<LoginPage />} />
         <Route path="/register" element={<RegisterPage />} />
         <Route path="/user-menu" element={<ProtectedRoute component={<UserMenuPage />} role="user" />} />
+        <Route path="/my-orders" element={<ProtectedRoute component={<UserOrders />} role="user" />} />
         <Route path="/admin-dashboard" element={<ProtectedRoute component={<AdminDashboard />} role="admin" />} />
         <Route path="/" element={<Navigate to="/login" />} />
       </Routes>
