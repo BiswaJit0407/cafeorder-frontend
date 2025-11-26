@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react"
 import axios from "axios"
+import { useNavigate } from "react-router-dom"
 import "./AdminDashboard.css"
 
 function AdminDashboard() {
@@ -9,6 +10,7 @@ function AdminDashboard() {
   const [filter, setFilter] = useState("pending")
   const token = localStorage.getItem("token")
   const user = JSON.parse(localStorage.getItem("user"))
+  const navigate = useNavigate()
 
   useEffect(() => {
     fetchOrders()
@@ -43,6 +45,12 @@ function AdminDashboard() {
     } catch (error) {
       console.error("Failed to update order:", error)
     }
+  }
+
+  const handleLogout = () => {
+    localStorage.removeItem("token")
+    localStorage.removeItem("user")
+    navigate("/login")
   }
 
   const generateBill = (order) => {
@@ -94,8 +102,15 @@ function AdminDashboard() {
   return (
     <div className="admin-dashboard">
       <div className="admin-header">
-        <h1>Admin Dashboard</h1>
-        <p>Welcome, {user?.name}</p>
+        <div className="header-content">
+          <div>
+            <h1>Admin Dashboard</h1>
+            <p>Welcome, {user?.name}</p>
+          </div>
+          <button className="logout-btn" onClick={handleLogout}>
+            Logout
+          </button>
+        </div>
       </div>
 
       <div className="filter-section">

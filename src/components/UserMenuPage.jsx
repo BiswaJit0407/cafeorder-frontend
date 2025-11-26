@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react"
 import axios from "axios"
+import { useNavigate } from "react-router-dom"
 import "./UserMenu.css"
 
 function UserMenuPage() {
@@ -11,6 +12,7 @@ function UserMenuPage() {
   const [error, setError] = useState("")
   const user = JSON.parse(localStorage.getItem("user"))
   const token = localStorage.getItem("token")
+  const navigate = useNavigate()
 
   useEffect(() => {
     const fetchMenu = async () => {
@@ -95,11 +97,24 @@ function UserMenuPage() {
     }
   }
 
+  const handleLogout = () => {
+    localStorage.removeItem("token")
+    localStorage.removeItem("user")
+    navigate("/login")
+  }
+
   return (
     <div className="user-menu-container">
       <div className="header">
-        <h1>Restaurant Menu</h1>
-        <p>Welcome, {user?.name}</p>
+        <div className="header-content">
+          <div>
+            <h1>Restaurant Menu</h1>
+            <p>Welcome, {user?.name}</p>
+          </div>
+          <button className="logout-btn" onClick={handleLogout}>
+            Logout
+          </button>
+        </div>
       </div>
 
       <div className="content">
