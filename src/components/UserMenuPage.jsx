@@ -7,12 +7,16 @@ import "./UserMenu.css"
 
 function UserMenuPage() {
   const [menuItems, setMenuItems] = useState([])
+  const [filteredItems, setFilteredItems] = useState([])
+  const [selectedCategory, setSelectedCategory] = useState("All")
   const [cart, setCart] = useState([])
   const [tableNumber, setTableNumber] = useState("")
   const [error, setError] = useState("")
   const user = JSON.parse(localStorage.getItem("user"))
   const token = localStorage.getItem("token")
   const navigate = useNavigate()
+
+  const categories = ["All", "Appetizer", "Main Course", "Dessert", "Beverage", "Special"]
 
   useEffect(() => {
     const fetchMenu = async () => {
@@ -21,6 +25,7 @@ function UserMenuPage() {
           headers: { Authorization: `Bearer ${token}` },
         })
         setMenuItems(response.data)
+        setFilteredItems(response.data)
       } catch (err) {
         setError("Failed to load menu")
       }
@@ -32,6 +37,18 @@ function UserMenuPage() {
 
     fetchMenu()
   }, [token, user])
+
+  useEffect(() => {
+    if (selectedCategory === "All") {
+      setFilteredItems(menuItems)
+    } else {
+      setFilteredItems(menuItems.filter((item) => item.category === selectedCategory))
+    }
+  }, [selectedCategory, menuItems])
+
+  const handleCategoryChange = (category) => {
+    setSelectedCategory(category)
+  }
 
   const addToCart = (item) => {
     const existingItem = cart.find((cartItem) => cartItem._id === item._id)
@@ -124,10 +141,23 @@ function UserMenuPage() {
 
       <div className="content">
         <div className="menu-section">
-          <h2>Available Items</h2>
+          <div className="menu-header">
+            <h2>Available Items</h2>
+            <div className="category-filters">
+              {categories.map((category) => (
+                <button
+                  key={category}
+                  className={`filter-btn ${selectedCategory === category ? "active" : ""}`}
+                  onClick={() => handleCategoryChange(category)}
+                >
+                  {category}
+                </button>
+              ))}
+            </div>
+          </div>
           {error && <div className="error-message">{error}</div>}
           <div className="menu-grid">
-            {menuItems.map((item) => (
+            {filteredItems.map((item) => (
               <div key={item._id} className="menu-card">
                 {item.image && (
                   <img src={item.image} alt={item.name} className="menu-item-image" />
