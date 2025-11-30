@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react"
 import axios from "axios"
 import { useNavigate } from "react-router-dom"
+import { API_URL } from "../config/api"
 import "./MenuManagement.css"
 
 function MenuManagement() {
@@ -30,7 +31,7 @@ function MenuManagement() {
 
   const fetchMenuItems = async () => {
     try {
-      const response = await axios.get("http://localhost:5000/api/menu/all", {
+      const response = await axios.get(`${API_URL}/api/menu/all`, {
         headers: { Authorization: `Bearer ${token}` },
       })
       setMenuItems(response.data)
@@ -59,7 +60,7 @@ function MenuManagement() {
     try {
       if (editingItem) {
         await axios.put(
-          `http://localhost:5000/api/menu/${editingItem._id}`,
+          `${API_URL}/api/menu/${editingItem._id}`,
           {
             ...formData,
             price: Number(formData.price),
@@ -71,7 +72,7 @@ function MenuManagement() {
         alert("Menu item updated successfully!")
       } else {
         await axios.post(
-          "http://localhost:5000/api/menu",
+          `${API_URL}/api/menu`,
           {
             ...formData,
             price: Number(formData.price),
@@ -109,7 +110,7 @@ function MenuManagement() {
     }
 
     try {
-      await axios.delete(`http://localhost:5000/api/menu/${id}`, {
+      await axios.delete(`${API_URL}/api/menu/${id}`, {
         headers: { Authorization: `Bearer ${token}` },
       })
       alert("Menu item deleted successfully!")
@@ -122,7 +123,7 @@ function MenuManagement() {
   const toggleAvailability = async (item) => {
     try {
       await axios.put(
-        `http://localhost:5000/api/menu/${item._id}`,
+        `${API_URL}/api/menu/${item._id}`,
         {
           ...item,
           available: !item.available,

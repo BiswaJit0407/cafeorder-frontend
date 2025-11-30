@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react"
 import axios from "axios"
 import { useNavigate } from "react-router-dom"
+import { API_URL } from "../config/api"
 import "./AdminDashboard.css"
 
 function AdminDashboard() {
@@ -18,7 +19,7 @@ function AdminDashboard() {
 
   const fetchOrders = async () => {
     try {
-      let url = "http://localhost:5000/api/orders"
+      let url = `${API_URL}/api/orders`
       if (filter !== "all") {
         url += `/status/${filter}`
       }
@@ -35,7 +36,7 @@ function AdminDashboard() {
   const updateOrderStatus = async (orderId, newStatus) => {
     try {
       await axios.put(
-        `http://localhost:5000/api/orders/${orderId}/status`,
+        `${API_URL}/api/orders/${orderId}/status`,
         { status: newStatus },
         {
           headers: { Authorization: `Bearer ${token}` },

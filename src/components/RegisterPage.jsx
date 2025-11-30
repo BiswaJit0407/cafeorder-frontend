@@ -3,6 +3,7 @@
 import { useState } from "react"
 import axios from "axios"
 import { useNavigate } from "react-router-dom"
+import { API_URL } from "../config/api"
 import "./Auth.css"
 
 function RegisterPage() {
@@ -43,7 +44,7 @@ function RegisterPage() {
     }
 
     try {
-      const response = await axios.post("http://localhost:5000/api/auth/register", {
+      const response = await axios.post(`${API_URL}/api/auth/register`, {
         name: formData.name.trim(),
         email: formData.email.trim().toLowerCase(),
         password: formData.password,

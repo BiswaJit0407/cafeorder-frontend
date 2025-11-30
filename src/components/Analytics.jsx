@@ -16,6 +16,7 @@ import {
   Legend,
 } from "chart.js"
 import { Bar, Line, Doughnut } from "react-chartjs-2"
+import { API_URL } from "../config/api"
 import "./Analytics.css"
 
 ChartJS.register(CategoryScale, LinearScale, BarElement, LineElement, PointElement, ArcElement, Title, Tooltip, Legend)
@@ -35,7 +36,7 @@ function Analytics() {
   const fetchAnalytics = async () => {
     setLoading(true)
     try {
-      const response = await axios.get(`http://localhost:5000/api/analytics?period=${period}`, {
+      const response = await axios.get(`${API_URL}/api/analytics?period=${period}`, {
         headers: { Authorization: `Bearer ${token}` },
       })
       setAnalytics(response.data)
