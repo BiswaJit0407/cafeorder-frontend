@@ -19,6 +19,8 @@ function MenuManagement() {
     available: true,
   })
   const [error, setError] = useState("")
+  const [uploading, setUploading] = useState(false)
+  const [imagePreview, setImagePreview] = useState("")
   const token = localStorage.getItem("token")
   const user = JSON.parse(localStorage.getItem("user"))
   const navigate = useNavigate()
@@ -46,6 +48,54 @@ function MenuManagement() {
       ...formData,
       [name]: type === "checkbox" ? checked : value,
     })
+  }
+
+  const handleImageUpload = async (e) => {
+    const file = e.target.files[0]
+    if (!file) return
+
+    // Validate file type
+    if (!file.type.startsWith("image/")) {
+      setError("Please select an image file")
+      return
+    }
+
+    // Validate file size (max 5MB)
+    if (file.size > 5 * 1024 * 1024) {
+      setError("Image size should be less than 5MB")
+      return
+    }
+
+    setUploading(true)
+    setError("")
+
+    try {
+      // Convert to base64
+      const reader = new FileReader()
+      reader.readAsDataURL(file)
+      reader.onloadend = async () => {
+        const base64Image = reader.result
+
+        // Upload to backend
+        const response = await axios.post(
+          "http://localhost:5000/api/upload",
+          { image: base64Image },
+          {
+            headers: { Authorization: `Bearer ${token}` },
+          }
+        )
+
+        setFormData({
+          ...formData,
+          image: response.data.url,
+        })
+        setImagePreview(response.data.url)
+        setUploading(false)
+      }
+    } catch (err) {
+      setError("Failed to upload image")
+      setUploading(false)
+    }
   }
 
   const handleSubmit = async (e) => {
@@ -101,6 +151,7 @@ function MenuManagement() {
       image: item.image || "",
       available: item.available,
     })
+    setImagePreview(item.image || "")
     setShowAddForm(true)
   }
 
@@ -150,6 +201,7 @@ function MenuManagement() {
     setEditingItem(null)
     setShowAddForm(false)
     setError("")
+    setImagePreview("")
   }
 
   const handleLogout = () => {
@@ -239,17 +291,33 @@ function MenuManagement() {
                     ))}
                   </select>
                 </div>
+              </div>
 
-                <div className="form-group">
-                  <label>Image URL</label>
-                  <input
-                    type="text"
-                    name="image"
-                    value={formData.image}
-                    onChange={handleInputChange}
-                    placeholder="https://example.com/image.jpg"
-                  />
-                </div>
+              <div className="form-group">
+                <label>Upload Image</label>
+                <input
+                  type="file"
+                  accept="image/*"
+                  onChange={handleImageUpload}
+                  disabled={uploading}
+                  className="file-input"
+                />
+                {uploading && <p className="upload-status">Uploading image...</p>}
+                {imagePreview && (
+                  <div className="image-preview">
+                    <img src={imagePreview} alt="Preview" />
+                    <button
+                      type="button"
+                      className="remove-image-btn"
+                      onClick={() => {
+                        setImagePreview("")
+                        setFormData({ ...formData, image: "" })
+                      }}
+                    >
+                      Remove Image
+                    </button>
+                  </div>
+                )}
               </div>
 
               <div className="form-group checkbox-group">
