@@ -225,8 +225,8 @@ function UserMenuPage() {
               <div className="cart-total">
                 <h3>Total: ₹{calculateTotal()}</h3>
               </div>
-              <button className="order-btn" onClick={placeOrder}>
-                Place Order
+              <button className="checkout-btn" onClick={() => navigate("/checkout", { state: { cart } })}>
+                Proceed to Checkout
               </button>
             </>
           )}

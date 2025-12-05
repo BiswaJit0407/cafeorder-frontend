@@ -112,6 +112,9 @@ function AdminDashboard() {
             <button className="menu-btn" onClick={() => navigate("/menu-management")}>
               Menu
             </button>
+            <button className="offers-btn" onClick={() => navigate("/offer-management")}>
+              Offers
+            </button>
             <button className="analytics-btn" onClick={() => navigate("/analytics")}>
               Analytics
             </button>

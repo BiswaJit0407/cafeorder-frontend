@@ -247,7 +247,7 @@
   text-align: right;
 }
 
-.order-btn {
+.checkout-btn {
   width: 100%;
   padding: 12px;
   background: #4caf50;
@@ -256,10 +256,13 @@
   border-radius: 5px;
   cursor: pointer;
   font-weight: bold;
+  transition: all 0.3s ease;
 }
 
-.order-btn:hover {
+.checkout-btn:hover {
   background: #45a049;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(76, 175, 80, 0.3);
 }
 
 .error-message {

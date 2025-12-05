@@ -25,6 +25,7 @@
 }
 
 .menu-btn,
+.offers-btn,
 .analytics-btn,
 .logout-btn {
   background: rgba(255, 255, 255, 0.2);
@@ -38,6 +39,7 @@
 }
 
 .menu-btn:hover,
+.offers-btn:hover,
 .analytics-btn:hover,
 .logout-btn:hover {
   background: white;
