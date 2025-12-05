@@ -67,8 +67,8 @@ function LandingPage() {
       <nav className="navbar">
         <div className="nav-content">
           <div className="logo">
-            <span className="logo-text">Cafe</span>
-            <span className="logo-highlight">Order</span>
+            <span className="logo-text">Little Cup</span>
+            <span className="logo-highlight">Cafe</span>
           </div>
           <button className="mobile-menu-toggle" onClick={toggleMobileMenu}>
             ☰
@@ -249,7 +249,7 @@ function LandingPage() {
       <footer className="footer" id="contact">
         <div className="footer-content">
           <div className="footer-section">
-            <h3>CafeOrder</h3>
+            <h3>Little Cup Cafe</h3>
             <p>Fresh food, warm service</p>
             <p style={{ marginTop: "1rem" }}>Follow us:</p>
             <div style={{ display: "flex", gap: "1rem", marginTop: "0.5rem" }}>
@@ -261,7 +261,7 @@ function LandingPage() {
           <div className="footer-section">
             <h4>Contact Us</h4>
             <p>📍 123 Restaurant Street, Food City, FC 12345</p>
-            <p>📧 info@cafeorder.com</p>
+            <p>📧 info@littlecupcafe.com</p>
             <p>📞 +1 (555) 123-4567</p>
           </div>
           <div className="footer-section">
@@ -272,7 +272,7 @@ function LandingPage() {
           </div>
         </div>
         <div className="footer-bottom">
-          <p>&copy; 2025 CafeOrder. All rights reserved.</p>
+          <p>&copy; 2025 Little Cup Cafe. All rights reserved.</p>
         </div>
       </footer>
     </div>
