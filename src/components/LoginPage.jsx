@@ -3,6 +3,7 @@
 import { useState } from "react"
 import axios from "axios"
 import { useNavigate } from "react-router-dom"
+import { toast } from "react-toastify"
 import { API_URL } from "../config/api"
 import "./Auth.css"
 
@@ -10,6 +11,7 @@ function LoginPage() {
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
   const [error, setError] = useState("")
+  const [loading, setLoading] = useState(false)
   const navigate = useNavigate()
 
   const handleSubmit = async (e) => {
@@ -18,14 +20,16 @@ function LoginPage() {
 
     // Validation
     if (!email.trim()) {
-      setError("Email is required")
+      toast.error("Email is required")
       return
     }
 
     if (!password) {
-      setError("Password is required")
+      toast.error("Password is required")
       return
     }
+
+    setLoading(true)
 
     try {
       const response = await axios.post(`${API_URL}/api/auth/login`, {
@@ -36,13 +40,18 @@ function LoginPage() {
       localStorage.setItem("token", response.data.token)
       localStorage.setItem("user", JSON.stringify(response.data.user))
 
-      if (response.data.user.role === "admin") {
-        navigate("/admin-dashboard")
-      } else {
-        navigate("/user-menu")
-      }
+      toast.success(`Welcome back, ${response.data.user.name}!`)
+
+      setTimeout(() => {
+        if (response.data.user.role === "admin") {
+          navigate("/admin-dashboard")
+        } else {
+          navigate("/user-menu")
+        }
+      }, 500)
     } catch (err) {
-      setError(err.response?.data?.message || "Login failed")
+      toast.error(err.response?.data?.message || "Login failed")
+      setLoading(false)
     }
   }
 
@@ -61,7 +70,9 @@ function LoginPage() {
             onChange={(e) => setPassword(e.target.value)}
             required
           />
-          <button type="submit">Login</button>
+          <button type="submit" disabled={loading}>
+            {loading ? "Logging in..." : "Login"}
+          </button>
         </form>
         <p>
           Don't have an account? <a href="/register">Register here</a>

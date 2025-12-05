@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react"
 import axios from "axios"
 import { useNavigate } from "react-router-dom"
+import { toast } from "react-toastify"
 import { API_URL } from "../config/api"
 import "./UserMenu.css"
 
@@ -28,7 +29,7 @@ function UserMenuPage() {
         setMenuItems(response.data)
         setFilteredItems(response.data)
       } catch (err) {
-        setError("Failed to load menu")
+        toast.error("Failed to load menu")
       }
     }
 
@@ -84,17 +85,19 @@ function UserMenuPage() {
 
   const placeOrder = async () => {
     if (!tableNumber) {
-      setError("Please enter a table number")
+      toast.error("Please enter a table number")
       return
     }
 
     if (cart.length === 0) {
-      setError("Cart is empty")
+      toast.error("Cart is empty")
       return
     }
 
+    const toastId = toast.loading("Placing your order...")
+
     try {
-      const response = await axios.post(
+      await axios.post(
         `${API_URL}/api/orders`,
         {
           userName: user.name,
@@ -109,10 +112,21 @@ function UserMenuPage() {
         },
       )
 
-      alert("Order placed successfully!")
+      toast.update(toastId, {
+        render: "Order placed successfully!",
+        type: "success",
+        isLoading: false,
+        autoClose: 3000,
+      })
       setCart([])
+      setError("")
     } catch (err) {
-      setError(err.response?.data?.message || "Failed to place order")
+      toast.update(toastId, {
+        render: err.response?.data?.message || "Failed to place order",
+        type: "error",
+        isLoading: false,
+        autoClose: 3000,
+      })
     }
   }
 

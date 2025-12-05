@@ -3,6 +3,7 @@
 import { useState } from "react"
 import axios from "axios"
 import { useNavigate } from "react-router-dom"
+import { toast } from "react-toastify"
 import { API_URL } from "../config/api"
 import "./Auth.css"
 
@@ -14,6 +15,7 @@ function RegisterPage() {
     tableNumber: "",
   })
   const [error, setError] = useState("")
+  const [loading, setLoading] = useState(false)
   const navigate = useNavigate()
 
   const handleChange = (e) => {
@@ -29,22 +31,24 @@ function RegisterPage() {
 
     // Validation
     if (!formData.name.trim()) {
-      setError("Name is required")
+      toast.error("Name is required")
       return
     }
 
     if (!formData.email.trim()) {
-      setError("Email is required")
+      toast.error("Email is required")
       return
     }
 
     if (formData.password.length < 6) {
-      setError("Password must be at least 6 characters")
+      toast.error("Password must be at least 6 characters")
       return
     }
 
+    setLoading(true)
+
     try {
-      const response = await axios.post(`${API_URL}/api/auth/register`, {
+      await axios.post(`${API_URL}/api/auth/register`, {
         name: formData.name.trim(),
         email: formData.email.trim().toLowerCase(),
         password: formData.password,
@@ -52,16 +56,16 @@ function RegisterPage() {
         role: "user",
       })
 
-      console.log("Registration successful:", response.data)
-
-      // Show success message and redirect to login
-      alert("Registration successful! Please login to continue.")
+      toast.success("Registration successful! Please login to continue.")
       
-      // Navigate to login page
-      navigate("/login")
+      // Navigate to login page after a short delay
+      setTimeout(() => {
+        navigate("/login")
+      }, 1500)
     } catch (err) {
       console.error("Registration error:", err)
-      setError(err.response?.data?.message || "Registration failed")
+      toast.error(err.response?.data?.message || "Registration failed")
+      setLoading(false)
     }
   }
 
@@ -103,7 +107,9 @@ function RegisterPage() {
             value={formData.tableNumber}
             onChange={handleChange}
           />
-          <button type="submit">Register</button>
+          <button type="submit" disabled={loading}>
+            {loading ? "Registering..." : "Register"}
+          </button>
         </form>
         <p>
           Already have an account? <a href="/login">Login here</a>

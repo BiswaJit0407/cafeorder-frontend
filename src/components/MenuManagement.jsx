@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react"
 import axios from "axios"
 import { useNavigate } from "react-router-dom"
+import { toast } from "react-toastify"
 import { API_URL } from "../config/api"
 import "./MenuManagement.css"
 
@@ -20,6 +21,7 @@ function MenuManagement() {
   })
   const [error, setError] = useState("")
   const [uploading, setUploading] = useState(false)
+  const [loading, setLoading] = useState(false)
   const [imagePreview, setImagePreview] = useState("")
   const token = localStorage.getItem("token")
   const user = JSON.parse(localStorage.getItem("user"))
@@ -39,6 +41,7 @@ function MenuManagement() {
       setMenuItems(response.data)
     } catch (error) {
       console.error("Failed to fetch menu items:", error)
+      toast.error("Failed to load menu items")
     }
   }
 
@@ -56,13 +59,13 @@ function MenuManagement() {
 
     // Validate file type
     if (!file.type.startsWith("image/")) {
-      setError("Please select an image file")
+      toast.error("Please select an image file")
       return
     }
 
     // Validate file size (max 5MB)
     if (file.size > 5 * 1024 * 1024) {
-      setError("Image size should be less than 5MB")
+      toast.error("Image size should be less than 5MB")
       return
     }
 
@@ -78,7 +81,7 @@ function MenuManagement() {
 
         // Upload to backend
         const response = await axios.post(
-          "http://localhost:5000/api/upload",
+          `${API_URL}/api/upload`,
           { image: base64Image },
           {
             headers: { Authorization: `Bearer ${token}` },
@@ -91,9 +94,10 @@ function MenuManagement() {
         })
         setImagePreview(response.data.url)
         setUploading(false)
+        toast.success("Image uploaded successfully!")
       }
     } catch (err) {
-      setError("Failed to upload image")
+      toast.error("Failed to upload image")
       setUploading(false)
     }
   }
@@ -103,9 +107,11 @@ function MenuManagement() {
     setError("")
 
     if (!formData.name || !formData.description || !formData.price) {
-      setError("Please fill in all required fields")
+      toast.error("Please fill in all required fields")
       return
     }
+
+    setLoading(true)
 
     try {
       if (editingItem) {
@@ -119,7 +125,7 @@ function MenuManagement() {
             headers: { Authorization: `Bearer ${token}` },
           }
         )
-        alert("Menu item updated successfully!")
+        toast.success("Menu item updated successfully!")
       } else {
         await axios.post(
           `${API_URL}/api/menu`,
@@ -131,13 +137,15 @@ function MenuManagement() {
             headers: { Authorization: `Bearer ${token}` },
           }
         )
-        alert("Menu item added successfully!")
+        toast.success("Menu item added successfully!")
       }
 
       resetForm()
       fetchMenuItems()
     } catch (err) {
-      setError(err.response?.data?.message || "Failed to save menu item")
+      toast.error(err.response?.data?.message || "Failed to save menu item")
+    } finally {
+      setLoading(false)
     }
   }
 
@@ -160,18 +168,32 @@ function MenuManagement() {
       return
     }
 
+    const toastId = toast.loading("Deleting menu item...")
+
     try {
       await axios.delete(`${API_URL}/api/menu/${id}`, {
         headers: { Authorization: `Bearer ${token}` },
       })
-      alert("Menu item deleted successfully!")
+      toast.update(toastId, {
+        render: "Menu item deleted successfully!",
+        type: "success",
+        isLoading: false,
+        autoClose: 3000,
+      })
       fetchMenuItems()
     } catch (error) {
-      alert("Failed to delete menu item")
+      toast.update(toastId, {
+        render: "Failed to delete menu item",
+        type: "error",
+        isLoading: false,
+        autoClose: 3000,
+      })
     }
   }
 
   const toggleAvailability = async (item) => {
+    const toastId = toast.loading("Updating availability...")
+
     try {
       await axios.put(
         `${API_URL}/api/menu/${item._id}`,
@@ -183,9 +205,20 @@ function MenuManagement() {
           headers: { Authorization: `Bearer ${token}` },
         }
       )
+      toast.update(toastId, {
+        render: "Availability updated!",
+        type: "success",
+        isLoading: false,
+        autoClose: 2000,
+      })
       fetchMenuItems()
     } catch (error) {
-      alert("Failed to update availability")
+      toast.update(toastId, {
+        render: "Failed to update availability",
+        type: "error",
+        isLoading: false,
+        autoClose: 3000,
+      })
     }
   }
 
@@ -333,10 +366,10 @@ function MenuManagement() {
               </div>
 
               <div className="form-actions">
-                <button type="submit" className="submit-btn">
-                  {editingItem ? "Update Item" : "Add Item"}
+                <button type="submit" className="submit-btn" disabled={loading || uploading}>
+                  {loading ? "Saving..." : editingItem ? "Update Item" : "Add Item"}
                 </button>
-                <button type="button" className="cancel-btn" onClick={resetForm}>
+                <button type="button" className="cancel-btn" onClick={resetForm} disabled={loading}>
                   Cancel
                 </button>
               </div>
