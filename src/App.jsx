@@ -1,6 +1,7 @@
 import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom"
 import { ToastContainer } from "react-toastify"
 import "react-toastify/dist/ReactToastify.css"
+import LandingPage from "./components/LandingPage"
 import LoginPage from "./components/LoginPage"
 import RegisterPage from "./components/RegisterPage"
 import UserMenuPage from "./components/UserMenuPage"
@@ -42,6 +43,7 @@ function App() {
         theme="light"
       />
       <Routes>
+        <Route path="/" element={<LandingPage />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/register" element={<RegisterPage />} />
         <Route path="/user-menu" element={<ProtectedRoute component={<UserMenuPage />} role="user" />} />
@@ -51,7 +53,6 @@ function App() {
         <Route path="/analytics" element={<ProtectedRoute component={<Analytics />} role="admin" />} />
         <Route path="/menu-management" element={<ProtectedRoute component={<MenuManagement />} role="admin" />} />
         <Route path="/offer-management" element={<ProtectedRoute component={<OfferManagement />} role="admin" />} />
-        <Route path="/" element={<Navigate to="/login" />} />
       </Routes>
     </Router>
   )
