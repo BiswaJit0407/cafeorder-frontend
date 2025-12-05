@@ -20,6 +20,8 @@ function Checkout() {
   const [specialInstructions, setSpecialInstructions] = useState("")
   const [loading, setLoading] = useState(false)
   const [validatingCoupon, setValidatingCoupon] = useState(false)
+  const [availableCoupons, setAvailableCoupons] = useState([])
+  const [showCoupons, setShowCoupons] = useState(false)
   
   const token = localStorage.getItem("token")
   const user = JSON.parse(localStorage.getItem("user"))
@@ -33,7 +35,20 @@ function Checkout() {
     if (user?.tableNumber) {
       setTableNumber(user.tableNumber)
     }
+
+    fetchAvailableCoupons()
   }, [cart, navigate, user])
+
+  const fetchAvailableCoupons = async () => {
+    try {
+      const response = await axios.get(`${API_URL}/api/coupons/active`, {
+        headers: { Authorization: `Bearer ${token}` },
+      })
+      setAvailableCoupons(response.data)
+    } catch (error) {
+      console.error("Failed to fetch coupons:", error)
+    }
+  }
 
   const calculateSubtotal = () => {
     return cart.reduce((total, item) => total + item.price * item.quantity, 0)
@@ -44,11 +59,15 @@ function Checkout() {
   }
 
   const updateQuantity = (itemId, quantity) => {
+    let newCart
     if (quantity === 0) {
-      setCart(cart.filter((item) => item._id !== itemId))
+      newCart = cart.filter((item) => item._id !== itemId)
     } else {
-      setCart(cart.map((item) => (item._id === itemId ? { ...item, quantity } : item)))
+      newCart = cart.map((item) => (item._id === itemId ? { ...item, quantity } : item))
     }
+    setCart(newCart)
+    localStorage.setItem("cart", JSON.stringify(newCart))
+    
     // Reset coupon if cart changes
     if (appliedCoupon) {
       setAppliedCoupon(null)
@@ -58,7 +77,10 @@ function Checkout() {
   }
 
   const removeItem = (itemId) => {
-    setCart(cart.filter((item) => item._id !== itemId))
+    const newCart = cart.filter((item) => item._id !== itemId)
+    setCart(newCart)
+    localStorage.setItem("cart", JSON.stringify(newCart))
+    
     if (appliedCoupon) {
       setAppliedCoupon(null)
       setDiscount(0)
@@ -103,6 +125,12 @@ function Checkout() {
     toast.info("Coupon removed")
   }
 
+  const selectCoupon = (coupon) => {
+    setCouponCode(coupon.code)
+    setShowCoupons(false)
+    applyCoupon()
+  }
+
   const placeOrder = async () => {
     if (!tableNumber) {
       toast.error("Please enter a table number")
@@ -134,6 +162,9 @@ function Checkout() {
         }
       )
 
+      // Clear cart from localStorage after successful order
+      localStorage.removeItem("cart")
+      
       toast.success("Order placed successfully!")
       setTimeout(() => {
         navigate("/my-orders")
@@ -212,17 +243,46 @@ function Checkout() {
           <div className="coupon-section">
             <h3>Have a Coupon?</h3>
             {!appliedCoupon ? (
-              <div className="coupon-input-group">
-                <input
-                  type="text"
-                  value={couponCode}
-                  onChange={(e) => setCouponCode(e.target.value.toUpperCase())}
-                  placeholder="Enter coupon code"
-                />
-                <button onClick={applyCoupon} disabled={validatingCoupon}>
-                  {validatingCoupon ? "Validating..." : "Apply"}
-                </button>
-              </div>
+              <>
+                <div className="coupon-input-group">
+                  <input
+                    type="text"
+                    value={couponCode}
+                    onChange={(e) => setCouponCode(e.target.value.toUpperCase())}
+                    placeholder="Enter coupon code"
+                  />
+                  <button onClick={applyCoupon} disabled={validatingCoupon}>
+                    {validatingCoupon ? "Validating..." : "Apply"}
+                  </button>
+                </div>
+                
+                {availableCoupons.length > 0 && (
+                  <div className="available-coupons">
+                    <button className="view-coupons-btn" onClick={() => setShowCoupons(!showCoupons)}>
+                      {showCoupons ? "Hide" : "View"} Available Coupons ({availableCoupons.length})
+                    </button>
+                    
+                    {showCoupons && (
+                      <div className="coupons-list">
+                        {availableCoupons.map((coupon) => (
+                          <div key={coupon._id} className="coupon-item" onClick={() => selectCoupon(coupon)}>
+                            <div className="coupon-item-header">
+                              <span className="coupon-item-code">{coupon.code}</span>
+                              <span className="coupon-item-discount">
+                                {coupon.discountType === "percentage"
+                                  ? `${coupon.discountValue}% OFF`
+                                  : `₹${coupon.discountValue} OFF`}
+                              </span>
+                            </div>
+                            <p className="coupon-item-desc">{coupon.description}</p>
+                            <p className="coupon-item-min">Min order: ₹{coupon.minOrderAmount}</p>
+                          </div>
+                        ))}
+                      </div>
+                    )}
+                  </div>
+                )}
+              </>
             ) : (
               <div className="applied-coupon">
                 <div className="coupon-info">

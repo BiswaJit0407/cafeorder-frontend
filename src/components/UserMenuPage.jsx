@@ -11,7 +11,10 @@ function UserMenuPage() {
   const [menuItems, setMenuItems] = useState([])
   const [filteredItems, setFilteredItems] = useState([])
   const [selectedCategory, setSelectedCategory] = useState("All")
-  const [cart, setCart] = useState([])
+  const [cart, setCart] = useState(() => {
+    const savedCart = localStorage.getItem("cart")
+    return savedCart ? JSON.parse(savedCart) : []
+  })
   const [tableNumber, setTableNumber] = useState("")
   const [error, setError] = useState("")
   const user = JSON.parse(localStorage.getItem("user"))
@@ -56,26 +59,33 @@ function UserMenuPage() {
   const addToCart = (item) => {
     const existingItem = cart.find((cartItem) => cartItem._id === item._id)
 
+    let newCart
     if (existingItem) {
-      setCart(
-        cart.map((cartItem) =>
-          cartItem._id === item._id ? { ...cartItem, quantity: cartItem.quantity + 1 } : cartItem,
-        ),
+      newCart = cart.map((cartItem) =>
+        cartItem._id === item._id ? { ...cartItem, quantity: cartItem.quantity + 1 } : cartItem
       )
     } else {
-      setCart([...cart, { ...item, quantity: 1 }])
+      newCart = [...cart, { ...item, quantity: 1 }]
     }
+    
+    setCart(newCart)
+    localStorage.setItem("cart", JSON.stringify(newCart))
+    toast.success(`${item.name} added to cart!`)
   }
 
   const removeFromCart = (itemId) => {
-    setCart(cart.filter((item) => item._id !== itemId))
+    const newCart = cart.filter((item) => item._id !== itemId)
+    setCart(newCart)
+    localStorage.setItem("cart", JSON.stringify(newCart))
   }
 
   const updateQuantity = (itemId, quantity) => {
     if (quantity === 0) {
       removeFromCart(itemId)
     } else {
-      setCart(cart.map((item) => (item._id === itemId ? { ...item, quantity } : item)))
+      const newCart = cart.map((item) => (item._id === itemId ? { ...item, quantity } : item))
+      setCart(newCart)
+      localStorage.setItem("cart", JSON.stringify(newCart))
     }
   }
 
