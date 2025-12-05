@@ -614,12 +614,11 @@
   }
 
   .nav-buttons {
-    flex-direction: column;
-    gap: 0.5rem;
+    display: none;
   }
 
   .hero-content {
-    flex-direction: column;
+    flex-direction: column-reverse;
     text-align: center;
   }
 
