@@ -98,9 +98,30 @@ function UserOrders() {
                   <p>
                     <strong>Table Number:</strong> {order.tableNumber}
                   </p>
-                  <p>
-                    <strong>Total Amount:</strong> ₹{order.totalAmount}
-                  </p>
+                  {order.couponCode && (
+                    <p className="coupon-applied">
+                      <strong>Coupon Applied:</strong> {order.couponCode}
+                    </p>
+                  )}
+                  <div className="amount-details">
+                    {order.discount > 0 ? (
+                      <>
+                        <p>
+                          <strong>Subtotal:</strong> <span className="original-amount">₹{order.totalAmount}</span>
+                        </p>
+                        <p className="discount-amount">
+                          <strong>Discount:</strong> <span>-₹{order.discount}</span>
+                        </p>
+                        <p className="final-amount">
+                          <strong>Total Paid:</strong> <span>₹{order.finalAmount}</span>
+                        </p>
+                      </>
+                    ) : (
+                      <p>
+                        <strong>Total Amount:</strong> ₹{order.totalAmount}
+                      </p>
+                    )}
+                  </div>
                 </div>
 
                 <div className="order-items">

@@ -94,7 +94,23 @@ function AdminDashboard() {
           </tbody>
         </table>
         <hr />
-        <h3 className="bill-total">Total Amount: ₹{order.totalAmount}</h3>
+        {order.couponCode && (
+          <>
+            <p>
+              <strong>Coupon Applied:</strong> {order.couponCode}
+            </p>
+            <p>
+              <strong>Subtotal:</strong> ₹{order.totalAmount}
+            </p>
+            <p style={{ color: "#4caf50" }}>
+              <strong>Discount:</strong> -₹{order.discount}
+            </p>
+            <hr />
+          </>
+        )}
+        <h3 className="bill-total">
+          Total Amount: ₹{order.discount > 0 ? order.finalAmount : order.totalAmount}
+        </h3>
         <hr />
       </div>
     )
@@ -165,9 +181,28 @@ function AdminDashboard() {
                   <p>
                     <strong>Table:</strong> {order.tableNumber}
                   </p>
-                  <p>
-                    <strong>Amount:</strong> ₹{order.totalAmount}
-                  </p>
+                  {order.couponCode && (
+                    <p style={{ color: "#4caf50", fontWeight: "600" }}>
+                      <strong>Coupon:</strong> {order.couponCode}
+                    </p>
+                  )}
+                  {order.discount > 0 ? (
+                    <>
+                      <p>
+                        <strong>Subtotal:</strong> <span style={{ textDecoration: "line-through", color: "#999" }}>₹{order.totalAmount}</span>
+                      </p>
+                      <p style={{ color: "#4caf50" }}>
+                        <strong>Discount:</strong> -₹{order.discount}
+                      </p>
+                      <p style={{ fontSize: "16px", fontWeight: "bold", color: "#667eea" }}>
+                        <strong>Final Amount:</strong> ₹{order.finalAmount}
+                      </p>
+                    </>
+                  ) : (
+                    <p>
+                      <strong>Amount:</strong> ₹{order.totalAmount}
+                    </p>
+                  )}
                 </div>
 
                 <div className="order-items">
