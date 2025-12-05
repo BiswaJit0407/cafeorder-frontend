@@ -199,27 +199,33 @@ function UserMenuPage() {
         </div>
 
         <div className="cart-section">
-          <h2>Your Order</h2>
-          <div className="table-input">
-            <label>Table Number:</label>
-            <input
-              type="number"
-              value={tableNumber}
-              onChange={(e) => setTableNumber(e.target.value)}
-              placeholder="Enter table number"
-            />
+          <div className="cart-header">
+            <svg className="cart-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+              <path d="M9 2L7.17 4H3a1 1 0 00-1 1v14a1 1 0 001 1h18a1 1 0 001-1V5a1 1 0 00-1-1h-4.17L15 2H9z" />
+              <circle cx="12" cy="13" r="3" />
+            </svg>
+            <h2>Your Cart</h2>
+            {cart.length > 0 && <span className="cart-count">{cart.length}</span>}
           </div>
 
           {cart.length === 0 ? (
-            <p className="empty-cart">Cart is empty</p>
+            <div className="empty-cart-state">
+              <svg className="empty-cart-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                <circle cx="9" cy="21" r="1" />
+                <circle cx="20" cy="21" r="1" />
+                <path d="M1 1h4l2.68 13.39a2 2 0 002 1.61h9.72a2 2 0 002-1.61L23 6H6" />
+              </svg>
+              <p>Your cart is empty</p>
+              <span>Add items to get started</span>
+            </div>
           ) : (
             <>
               <div className="cart-items">
                 {cart.map((item) => (
                   <div key={item._id} className="cart-item">
                     <div className="item-info">
-                      <p>{item.name}</p>
-                      <p>₹{item.price}</p>
+                      <p className="item-name">{item.name}</p>
+                      <p className="item-price">₹{item.price}</p>
                     </div>
                     <div className="item-controls">
                       <button onClick={() => updateQuantity(item._id, item.quantity - 1)}>-</button>
@@ -227,15 +233,25 @@ function UserMenuPage() {
                       <button onClick={() => updateQuantity(item._id, item.quantity + 1)}>+</button>
                     </div>
                     <button className="remove-btn" onClick={() => removeFromCart(item._id)}>
-                      Remove
+                      ×
                     </button>
                   </div>
                 ))}
               </div>
-              <div className="cart-total">
-                <h3>Total: ₹{calculateTotal()}</h3>
+              <div className="cart-summary">
+                <div className="summary-row">
+                  <span>Subtotal</span>
+                  <span>₹{calculateTotal()}</span>
+                </div>
+                <div className="summary-row total">
+                  <span>Total</span>
+                  <span>₹{calculateTotal()}</span>
+                </div>
               </div>
               <button className="checkout-btn" onClick={() => navigate("/checkout", { state: { cart } })}>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                  <path d="M5 12h14M12 5l7 7-7 7" />
+                </svg>
                 Proceed to Checkout
               </button>
             </>
