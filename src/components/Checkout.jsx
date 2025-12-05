@@ -249,37 +249,35 @@ function Checkout() {
                     type="text"
                     value={couponCode}
                     onChange={(e) => setCouponCode(e.target.value.toUpperCase())}
-                    placeholder="Enter coupon code"
+                    placeholder="ENTER COUPON CODE"
                   />
-                  <button onClick={applyCoupon} disabled={validatingCoupon}>
+                  <button className="apply-btn" onClick={applyCoupon} disabled={validatingCoupon}>
                     {validatingCoupon ? "Validating..." : "Apply"}
                   </button>
                 </div>
                 
                 {availableCoupons.length > 0 && (
-                  <div className="available-coupons">
-                    <button className="view-coupons-btn" onClick={() => setShowCoupons(!showCoupons)}>
-                      {showCoupons ? "Hide" : "View"} Available Coupons ({availableCoupons.length})
-                    </button>
-                    
-                    {showCoupons && (
-                      <div className="coupons-list">
-                        {availableCoupons.map((coupon) => (
-                          <div key={coupon._id} className="coupon-item" onClick={() => selectCoupon(coupon)}>
-                            <div className="coupon-item-header">
-                              <span className="coupon-item-code">{coupon.code}</span>
-                              <span className="coupon-item-discount">
-                                {coupon.discountType === "percentage"
-                                  ? `${coupon.discountValue}% OFF`
-                                  : `₹${coupon.discountValue} OFF`}
-                              </span>
-                            </div>
-                            <p className="coupon-item-desc">{coupon.description}</p>
-                            <p className="coupon-item-min">Min order: ₹{coupon.minOrderAmount}</p>
-                          </div>
-                        ))}
+                  <button className="check-available-btn" onClick={() => setShowCoupons(!showCoupons)}>
+                    {showCoupons ? "Hide Available Offers" : "Check Available Offers"}
+                  </button>
+                )}
+                
+                {showCoupons && availableCoupons.length > 0 && (
+                  <div className="coupons-list">
+                    {availableCoupons.map((coupon) => (
+                      <div key={coupon._id} className="coupon-item" onClick={() => selectCoupon(coupon)}>
+                        <div className="coupon-item-header">
+                          <span className="coupon-item-code">{coupon.code}</span>
+                          <span className="coupon-item-discount">
+                            {coupon.discountType === "percentage"
+                              ? `${coupon.discountValue}% OFF`
+                              : `₹${coupon.discountValue} OFF`}
+                          </span>
+                        </div>
+                        <p className="coupon-item-desc">{coupon.description}</p>
+                        <p className="coupon-item-min">Min order: ₹{coupon.minOrderAmount}</p>
                       </div>
-                    )}
+                    ))}
                   </div>
                 )}
               </>

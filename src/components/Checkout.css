@@ -210,7 +210,7 @@
   text-transform: uppercase;
 }
 
-.coupon-input-group button {
+.apply-btn {
   padding: 10px 20px;
   background: #667eea;
   color: white;
@@ -219,15 +219,34 @@
   cursor: pointer;
   font-weight: bold;
   white-space: nowrap;
+  transition: all 0.3s ease;
 }
 
-.coupon-input-group button:hover {
+.apply-btn:hover {
   background: #764ba2;
 }
 
-.coupon-input-group button:disabled {
+.apply-btn:disabled {
   background: #ccc;
   cursor: not-allowed;
+}
+
+.check-available-btn {
+  width: 100%;
+  padding: 12px;
+  margin-top: 10px;
+  background: #f0f0f0;
+  border: 2px solid #667eea;
+  color: #667eea;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+.check-available-btn:hover {
+  background: #667eea;
+  color: white;
 }
 
 .applied-coupon {
@@ -270,33 +289,14 @@
   background: #d32f2f;
 }
 
-.available-coupons {
-  margin-top: 15px;
-}
-
-.view-coupons-btn {
-  width: 100%;
-  padding: 10px;
-  background: #f0f0f0;
-  border: 1px solid #ddd;
-  border-radius: 5px;
-  cursor: pointer;
-  font-weight: 600;
-  color: #667eea;
-  transition: all 0.3s ease;
-}
-
-.view-coupons-btn:hover {
-  background: #e0e0e0;
-}
-
 .coupons-list {
-  margin-top: 10px;
-  max-height: 300px;
+  margin-top: 15px;
+  max-height: 350px;
   overflow-y: auto;
   display: flex;
   flex-direction: column;
   gap: 10px;
+  padding: 5px;
 }
 
 .coupon-item {
