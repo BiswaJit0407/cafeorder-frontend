@@ -72,48 +72,63 @@ function RegisterPage() {
   return (
     <div className="auth-container">
       <div className="auth-box">
-        <h1>Little Cup Cafe</h1>
-        <h2>Register</h2>
+        <div className="logo-container">
+          <div className="auth-logo">☕</div>
+        </div>
+        <h1>Create an account</h1>
+        <h2>Sign up in minutes to connect</h2>
         {error && <div className="error-message">{error}</div>}
         <form onSubmit={handleSubmit}>
-          <input
-            type="text"
-            name="name"
-            placeholder="Full Name"
-            value={formData.name}
-            onChange={handleChange}
-            required
-          />
-          <input
-            type="email"
-            name="email"
-            placeholder="Email"
-            value={formData.email}
-            onChange={handleChange}
-            required
-          />
-          <input
-            type="password"
-            name="password"
-            placeholder="Password"
-            value={formData.password}
-            onChange={handleChange}
-            required
-          />
-          <input
-            type="number"
-            name="tableNumber"
-            placeholder="Table Number (Optional)"
-            value={formData.tableNumber}
-            onChange={handleChange}
-          />
+          <div className="input-group">
+            <span className="input-icon">👤</span>
+            <input
+              type="text"
+              name="name"
+              placeholder="Full Name"
+              value={formData.name}
+              onChange={handleChange}
+              required
+            />
+          </div>
+          <div className="input-group">
+            <span className="input-icon">📧</span>
+            <input
+              type="email"
+              name="email"
+              placeholder="Email"
+              value={formData.email}
+              onChange={handleChange}
+              required
+            />
+          </div>
+          <div className="input-group">
+            <span className="input-icon">🔒</span>
+            <input
+              type="password"
+              name="password"
+              placeholder="Password"
+              value={formData.password}
+              onChange={handleChange}
+              required
+            />
+          </div>
+          <div className="input-group">
+            <span className="input-icon">🪑</span>
+            <input
+              type="number"
+              name="tableNumber"
+              placeholder="Table Number (Optional)"
+              value={formData.tableNumber}
+              onChange={handleChange}
+            />
+          </div>
           <button type="submit" disabled={loading}>
-            {loading ? "Registering..." : "Register"}
+            {loading ? "Creating Account..." : "Sign Up"}
           </button>
         </form>
-        <p>
-          Already have an account? <a href="/login">Login here</a>
-        </p>
+        <div className="auth-footer">
+          Already have an account? <a href="/login">Sign In</a>
+        </div>
       </div>
     </div>
   )

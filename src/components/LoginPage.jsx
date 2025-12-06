@@ -58,25 +58,40 @@ function LoginPage() {
   return (
     <div className="auth-container">
       <div className="auth-box">
-        <h1>Little Cup Cafe</h1>
-        <h2>Login</h2>
+        <div className="logo-container">
+          <div className="auth-logo">☕</div>
+        </div>
+        <h1>Login your account</h1>
+        <h2>Log in to manage your orders</h2>
         {error && <div className="error-message">{error}</div>}
         <form onSubmit={handleSubmit}>
-          <input type="email" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)} required />
-          <input
-            type="password"
-            placeholder="Password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            required
-          />
+          <div className="input-group">
+            <span className="input-icon">📧</span>
+            <input 
+              type="email" 
+              placeholder="Email" 
+              value={email} 
+              onChange={(e) => setEmail(e.target.value)} 
+              required 
+            />
+          </div>
+          <div className="input-group">
+            <span className="input-icon">🔒</span>
+            <input
+              type="password"
+              placeholder="Password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              required
+            />
+          </div>
           <button type="submit" disabled={loading}>
-            {loading ? "Logging in..." : "Login"}
+            {loading ? "Logging in..." : "Sign In"}
           </button>
         </form>
-        <p>
-          Don't have an account? <a href="/register">Register here</a>
-        </p>
+        <div className="auth-footer">
+          Don't have an account? <a href="/register">Sign Up</a>
+        </div>
       </div>
     </div>
   )
