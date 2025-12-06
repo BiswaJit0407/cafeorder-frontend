@@ -5,7 +5,7 @@
 }
 
 .header {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: linear-gradient(135deg, #ff6b35 0%, #e55a2b 100%);
   color: white;
   padding: 20px;
 }
@@ -38,7 +38,7 @@
 .dashboard-btn:hover,
 .logout-btn:hover {
   background: white;
-  color: #667eea;
+  color: #ff6b35;
 }
 
 .analytics-content {
@@ -65,9 +65,9 @@
 .period-selector button {
   padding: 12px 30px;
   background: white;
-  border: 2px solid #667eea;
-  color: #667eea;
-  border-radius: 5px;
+  border: 2px solid #ff6b35;
+  color: #ff6b35;
+  border-radius: 8px;
   cursor: pointer;
   font-weight: bold;
   font-size: 16px;
@@ -75,13 +75,15 @@
 }
 
 .period-selector button.active {
-  background: #667eea;
+  background: #ff6b35;
   color: white;
 }
 
 .period-selector button:hover {
-  background: #667eea;
+  background: #ff6b35;
   color: white;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(255, 107, 53, 0.3);
 }
 
 .stats-grid {
@@ -110,7 +112,7 @@
 .stat-value {
   font-size: 36px;
   font-weight: bold;
-  color: #667eea;
+  color: #ff6b35;
   margin: 10px 0;
 }
 

@@ -6,10 +6,10 @@
 }
 
 .admin-header {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: linear-gradient(135deg, #ff6b35 0%, #e55a2b 100%);
   color: white;
   padding: 30px;
-  border-radius: 8px;
+  border-radius: 12px;
   margin-bottom: 30px;
 }
 
@@ -43,7 +43,7 @@
 .analytics-btn:hover,
 .logout-btn:hover {
   background: white;
-  color: #667eea;
+  color: #ff6b35;
 }
 
 .filter-section {
@@ -57,15 +57,23 @@
 .filter-section button {
   padding: 10px 20px;
   background: white;
-  border: 2px solid #667eea;
-  color: #667eea;
-  border-radius: 5px;
+  border: 2px solid #ff6b35;
+  color: #ff6b35;
+  border-radius: 8px;
   cursor: pointer;
   font-weight: bold;
+  transition: all 0.3s ease;
+}
+
+.filter-section button:hover {
+  background: #ff6b35;
+  color: white;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(255, 107, 53, 0.3);
 }
 
 .filter-section button.active {
-  background: #667eea;
+  background: #ff6b35;
   color: white;
 }
 
@@ -93,7 +101,7 @@
 
 .status-badge {
   padding: 5px 10px;
-  background: #667eea;
+  background: #ff6b35;
   color: white;
   border-radius: 20px;
   font-size: 12px;

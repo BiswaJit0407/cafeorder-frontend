@@ -5,7 +5,7 @@
 }
 
 .header {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: linear-gradient(135deg, #ff6b35 0%, #e55a2b 100%);
   color: white;
   padding: 20px;
 }
@@ -38,7 +38,7 @@
 .menu-btn:hover,
 .logout-btn:hover {
   background: white;
-  color: #667eea;
+  color: #ff6b35;
 }
 
 .orders-content {
@@ -77,18 +77,21 @@
 }
 
 .no-orders button {
-  background: #667eea;
+  background: #ff6b35;
   color: white;
   border: none;
   padding: 12px 30px;
-  border-radius: 5px;
+  border-radius: 8px;
   cursor: pointer;
   font-size: 16px;
   font-weight: bold;
+  transition: all 0.3s ease;
 }
 
 .no-orders button:hover {
-  background: #764ba2;
+  background: #e55a2b;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(255, 107, 53, 0.3);
 }
 
 .orders-list {
@@ -180,16 +183,16 @@
 }
 
 .final-amount {
-  border-top: 2px solid #667eea;
+  border-top: 2px solid #ff6b35;
   padding-top: 8px;
   margin-top: 8px;
   font-size: 18px;
   font-weight: bold;
-  color: #667eea !important;
+  color: #ff6b35 !important;
 }
 
 .final-amount span {
-  color: #667eea;
+  color: #ff6b35;
   font-size: 20px;
 }
 
@@ -236,7 +239,7 @@
 
 .item-price {
   font-weight: bold;
-  color: #667eea;
+  color: #ff6b35;
 }
 
 .special-instructions {

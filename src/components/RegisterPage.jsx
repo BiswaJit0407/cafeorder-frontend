@@ -72,7 +72,7 @@ function RegisterPage() {
   return (
     <div className="auth-container">
       <div className="auth-box">
-        <h1>Restaurant Order System</h1>
+        <h1>Little Cup Cafe</h1>
         <h2>Register</h2>
         {error && <div className="error-message">{error}</div>}
         <form onSubmit={handleSubmit}>

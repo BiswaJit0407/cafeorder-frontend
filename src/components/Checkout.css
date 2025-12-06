@@ -14,18 +14,20 @@
 
 .back-btn {
   background: white;
-  border: 2px solid #667eea;
-  color: #667eea;
+  border: 2px solid #ff6b35;
+  color: #ff6b35;
   padding: 10px 20px;
-  border-radius: 5px;
+  border-radius: 8px;
   cursor: pointer;
   font-weight: bold;
   transition: all 0.3s ease;
 }
 
 .back-btn:hover {
-  background: #667eea;
+  background: #ff6b35;
   color: white;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(255, 107, 53, 0.3);
 }
 
 .checkout-header h1 {
@@ -116,9 +118,9 @@
 }
 
 .item-quantity button:hover {
-  background: #667eea;
+  background: #ff6b35;
   color: white;
-  border-color: #667eea;
+  border-color: #ff6b35;
 }
 
 .item-quantity span {
@@ -129,7 +131,7 @@
 
 .item-total {
   font-weight: bold;
-  color: #667eea;
+  color: #ff6b35;
   font-size: 18px;
   min-width: 80px;
   text-align: right;
@@ -212,10 +214,10 @@
 
 .apply-btn {
   padding: 10px 20px;
-  background: #667eea;
+  background: #ff6b35;
   color: white;
   border: none;
-  border-radius: 5px;
+  border-radius: 8px;
   cursor: pointer;
   font-weight: bold;
   white-space: nowrap;
@@ -223,7 +225,9 @@
 }
 
 .apply-btn:hover {
-  background: #764ba2;
+  background: #e55a2b;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(255, 107, 53, 0.3);
 }
 
 .apply-btn:disabled {
@@ -236,16 +240,16 @@
   padding: 12px;
   margin-top: 10px;
   background: #f0f0f0;
-  border: 2px solid #667eea;
-  color: #667eea;
-  border-radius: 5px;
+  border: 2px solid #ff6b35;
+  color: #ff6b35;
+  border-radius: 8px;
   cursor: pointer;
   font-weight: 600;
   transition: all 0.3s ease;
 }
 
 .check-available-btn:hover {
-  background: #667eea;
+  background: #ff6b35;
   color: white;
 }
 
@@ -300,7 +304,7 @@
 }
 
 .coupon-item {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: linear-gradient(135deg, #ff6b35 0%, #e55a2b 100%);
   color: white;
   padding: 15px;
   border-radius: 8px;
@@ -310,7 +314,7 @@
 
 .coupon-item:hover {
   transform: translateX(5px);
-  box-shadow: 0 4px 8px rgba(102, 126, 234, 0.3);
+  box-shadow: 0 4px 8px rgba(255, 107, 53, 0.3);
 }
 
 .coupon-item-header {
@@ -361,10 +365,10 @@
   border-bottom: none;
   font-size: 20px;
   font-weight: bold;
-  color: #667eea;
+  color: #ff6b35;
   padding-top: 15px;
   margin-top: 10px;
-  border-top: 2px solid #667eea;
+  border-top: 2px solid #ff6b35;
 }
 
 .place-order-btn {
