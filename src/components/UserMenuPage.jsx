@@ -10,7 +10,7 @@ import "./UserMenu.css"
 function UserMenuPage() {
   const [menuItems, setMenuItems] = useState([])
   const [filteredItems, setFilteredItems] = useState([])
-  const [combos, setCombos] = useState([])
+  const [specialOffers, setSpecialOffers] = useState([])
   const [selectedCategory, setSelectedCategory] = useState("All")
   const [cart, setCart] = useState(() => {
     const savedCart = localStorage.getItem("cart")
@@ -22,7 +22,7 @@ function UserMenuPage() {
   const token = localStorage.getItem("token")
   const navigate = useNavigate()
 
-  const categories = ["All", "Combos", "Appetizer", "Main Course", "Dessert", "Beverage", "Special"]
+  const categories = ["All", "Special Offers", "Appetizer", "Main Course", "Dessert", "Beverage", "Special"]
 
   useEffect(() => {
     const fetchMenu = async () => {
@@ -42,23 +42,23 @@ function UserMenuPage() {
     }
 
     fetchMenu()
-    fetchCombos()
+    fetchSpecialOffers()
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
-  const fetchCombos = async () => {
+  const fetchSpecialOffers = async () => {
     try {
-      const response = await axios.get(`${API_URL}/api/combos`)
-      setCombos(response.data)
+      const response = await axios.get(`${API_URL}/api/special-offers`)
+      setSpecialOffers(response.data)
     } catch (err) {
-      console.error("Failed to load combos:", err)
+      console.error("Failed to load special offers:", err)
     }
   }
 
   useEffect(() => {
     if (selectedCategory === "All") {
       setFilteredItems(menuItems)
-    } else if (selectedCategory === "Combos") {
+    } else if (selectedCategory === "Special Offers") {
       setFilteredItems([])
     } else {
       setFilteredItems(menuItems.filter((item) => item.category === selectedCategory))
@@ -303,30 +303,37 @@ function UserMenuPage() {
           </div>
           {error && <div className="error-message">{error}</div>}
           
-          {selectedCategory === "Combos" ? (
+          {selectedCategory === "Special Offers" ? (
             <div className="menu-grid">
-              {combos.map((combo) => (
-                <div key={combo._id} className="menu-card combo-card-user">
-                  {combo.image && (
-                    <img src={combo.image} alt={combo.name} className="menu-item-image" />
+              {specialOffers.map((offer) => (
+                <div key={offer._id} className="menu-card special-offer-card-user">
+                  {offer.image && (
+                    <img src={offer.image} alt={offer.name} className="menu-item-image" />
                   )}
-                  <div className="combo-badge">COMBO OFFER</div>
-                  <h3>{combo.name}</h3>
-                  <p>{combo.description}</p>
-                  <div className="combo-items-preview">
-                    <strong>Includes:</strong>
-                    <ul>
-                      {combo.items.map((item, index) => (
-                        <li key={index}>{item.name} x{item.quantity}</li>
-                      ))}
-                    </ul>
+                  <div className="special-offer-badge">{offer.badgeText}</div>
+                  <h3>{offer.name}</h3>
+                  <p>{offer.description}</p>
+                  {offer.items && offer.items.length > 0 && (
+                    <div className="offer-items-preview">
+                      <strong>Includes:</strong>
+                      <ul>
+                        {offer.items.map((item, index) => (
+                          <li key={index}>{item.name} x{item.quantity}</li>
+                        ))}
+                      </ul>
+                    </div>
+                  )}
+                  {offer.validDays && offer.validDays.length > 0 && (
+                    <div className="offer-valid-days-user">
+                      <strong>Valid:</strong> {offer.validDays.join(", ")}
+                    </div>
+                  )}
+                  <div className="offer-pricing-user">
+                    <span className="original-price-user">₹{offer.originalPrice}</span>
+                    <span className="offer-price-user">₹{offer.offerPrice}</span>
+                    <span className="discount-badge-user">{offer.discount}% OFF</span>
                   </div>
-                  <div className="combo-pricing-user">
-                    <span className="original-price-user">₹{combo.originalPrice}</span>
-                    <span className="combo-price-user">₹{combo.comboPrice}</span>
-                    <span className="discount-badge-user">{combo.discount}% OFF</span>
-                  </div>
-                  <button onClick={() => addToCart({ ...combo, price: combo.comboPrice, isCombo: true })}>Add to Cart</button>
+                  <button onClick={() => addToCart({ _id: offer.menuItemId, name: offer.name, price: offer.offerPrice, image: offer.image, isSpecialOffer: true, allowCoupons: false })}>Add to Cart</button>
                 </div>
               ))}
             </div>

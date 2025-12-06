@@ -602,12 +602,12 @@
   }
 }
 
-/* Combo Cards */
-.combo-card-user {
+/* Special Offer Cards */
+.special-offer-card-user {
   position: relative;
 }
 
-.combo-badge {
+.special-offer-badge {
   position: absolute;
   top: 10px;
   right: 10px;
@@ -618,25 +618,35 @@
   font-size: 0.75rem;
   font-weight: 700;
   z-index: 1;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
 }
 
-.combo-items-preview {
+.offer-items-preview {
   margin: 10px 0;
   font-size: 0.9rem;
 }
 
-.combo-items-preview ul {
+.offer-items-preview ul {
   margin: 5px 0 0 20px;
   padding: 0;
   list-style: disc;
 }
 
-.combo-items-preview li {
+.offer-items-preview li {
   margin: 3px 0;
   color: #666;
 }
 
-.combo-pricing-user {
+.offer-valid-days-user {
+  margin: 10px 0;
+  padding: 8px;
+  background: #fff3cd;
+  border-radius: 6px;
+  font-size: 0.85rem;
+  color: #856404;
+}
+
+.offer-pricing-user {
   display: flex;
   align-items: center;
   gap: 10px;
@@ -650,7 +660,7 @@
   font-size: 1rem;
 }
 
-.combo-price-user {
+.offer-price-user {
   font-size: 1.3rem;
   font-weight: bold;
   color: #ff6b35;

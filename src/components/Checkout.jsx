@@ -30,6 +30,7 @@ function Checkout() {
     if (!cart || cart.length === 0) {
       toast.error("Your cart is empty")
       navigate("/user-menu")
+      return
     }
 
     if (user?.tableNumber) {
@@ -37,7 +38,8 @@ function Checkout() {
     }
 
     fetchAvailableCoupons()
-  }, [cart, navigate, user])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
   const fetchAvailableCoupons = async () => {
     try {

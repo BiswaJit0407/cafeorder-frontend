@@ -25,8 +25,8 @@
 }
 
 .menu-btn,
-.combo-btn,
-.offers-btn,
+.special-offers-btn,
+.coupons-btn,
 .reviews-btn,
 .analytics-btn,
 .logout-btn {
@@ -41,8 +41,8 @@
 }
 
 .menu-btn:hover,
-.combo-btn:hover,
-.offers-btn:hover,
+.special-offers-btn:hover,
+.coupons-btn:hover,
 .reviews-btn:hover,
 .analytics-btn:hover,
 .logout-btn:hover {

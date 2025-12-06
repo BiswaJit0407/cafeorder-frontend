@@ -128,11 +128,11 @@ function AdminDashboard() {
             <button className="menu-btn" onClick={() => navigate("/menu-management")}>
               Menu
             </button>
-            <button className="combo-btn" onClick={() => navigate("/combo-management")}>
-              Combos
+            <button className="special-offers-btn" onClick={() => navigate("/special-offers")}>
+              Special Offers
             </button>
-            <button className="offers-btn" onClick={() => navigate("/offer-management")}>
-              Offers
+            <button className="coupons-btn" onClick={() => navigate("/offer-management")}>
+              Coupons
             </button>
             <button className="reviews-btn" onClick={() => navigate("/review-management")}>
               Reviews
