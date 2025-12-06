@@ -26,6 +26,7 @@
 }
 
 .orders-btn,
+.reviews-btn,
 .logout-btn {
   background: rgba(255, 255, 255, 0.2);
   color: white;
@@ -38,6 +39,7 @@
 }
 
 .orders-btn:hover,
+.reviews-btn:hover,
 .logout-btn:hover {
   background: white;
   color: #ff6b35;

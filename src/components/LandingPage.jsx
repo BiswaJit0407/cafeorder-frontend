@@ -11,6 +11,8 @@ function LandingPage() {
   const [featuredItems, setFeaturedItems] = useState([])
   const [loading, setLoading] = useState(true)
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
+  const [reviews, setReviews] = useState([])
+  const [reviewsLoading, setReviewsLoading] = useState(true)
 
   // Authentication redirect logic
   useEffect(() => {
@@ -48,6 +50,23 @@ function LandingPage() {
     }
 
     fetchFeaturedItems()
+  }, [])
+
+  // Fetch reviews
+  useEffect(() => {
+    const fetchReviews = async () => {
+      try {
+        const response = await axios.get(`${API_URL}/api/reviews`)
+        setReviews(response.data.slice(0, 6))
+      } catch (error) {
+        console.error("Failed to load reviews:", error)
+        setReviews([])
+      } finally {
+        setReviewsLoading(false)
+      }
+    }
+
+    fetchReviews()
   }, [])
 
   const toggleMobileMenu = () => {
@@ -234,6 +253,39 @@ function LandingPage() {
             <p>Fresh ingredients, amazing taste</p>
           </div>
         </div>
+      </section>
+
+      <section className="reviews-section">
+        <h2>What Our <span className="highlight">Customers Say</span></h2>
+        {reviewsLoading ? (
+          <div className="reviews-loading">Loading reviews...</div>
+        ) : reviews.length > 0 ? (
+          <div className="reviews-grid">
+            {reviews.map((review) => (
+              <div key={review._id} className="review-card-landing">
+                <div className="review-stars">
+                  {[1, 2, 3, 4, 5].map((star) => (
+                    <span key={star} className={`star ${star <= review.rating ? "filled" : ""}`}>
+                      ★
+                    </span>
+                  ))}
+                </div>
+                <p className="review-text">"{review.comment}"</p>
+                <div className="review-author">
+                  <div className="author-avatar">{review.userName.charAt(0).toUpperCase()}</div>
+                  <div className="author-info">
+                    <p className="author-name">{review.userName}</p>
+                    <p className="review-date">{new Date(review.createdAt).toLocaleDateString()}</p>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        ) : (
+          <div className="no-reviews-yet">
+            <p>Be the first to share your experience!</p>
+          </div>
+        )}
       </section>
 
       <section className="cta-section">
