@@ -146,6 +146,8 @@ function UserMenuPage() {
     navigate("/login")
   }
 
+  const [showCart, setShowCart] = useState(false)
+
   return (
     <div className="user-menu-container">
       <div className="header">
@@ -158,6 +160,15 @@ function UserMenuPage() {
             <button className="orders-btn" onClick={() => navigate("/my-orders")}>
               My Orders
             </button>
+            <button className="cart-btn" onClick={() => setShowCart(!showCart)}>
+              <svg className="cart-icon-nav" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                <circle cx="9" cy="21" r="1" />
+                <circle cx="20" cy="21" r="1" />
+                <path d="M1 1h4l2.68 13.39a2 2 0 002 1.61h9.72a2 2 0 002-1.61L23 6H6" />
+              </svg>
+              Cart
+              {cart.length > 0 && <span className="cart-badge">{cart.length}</span>}
+            </button>
             <button className="logout-btn" onClick={handleLogout}>
               Logout
             </button>
@@ -165,8 +176,95 @@ function UserMenuPage() {
         </div>
       </div>
 
+      {/* Cart Sidebar */}
+      <div className={`cart-sidebar ${showCart ? "show" : ""}`}>
+        <div className="cart-sidebar-header">
+          <h2>Your Cart</h2>
+          <button className="close-cart-btn" onClick={() => setShowCart(false)}>
+            ×
+          </button>
+        </div>
+
+        {cart.length === 0 ? (
+          <div className="empty-cart-state">
+            <svg className="empty-cart-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+              <circle cx="9" cy="21" r="1" />
+              <circle cx="20" cy="21" r="1" />
+              <path d="M1 1h4l2.68 13.39a2 2 0 002 1.61h9.72a2 2 0 002-1.61L23 6H6" />
+            </svg>
+            <p>Your cart is empty</p>
+            <span>Add items to get started</span>
+          </div>
+        ) : (
+          <>
+            <div className="cart-items">
+              {cart.map((item) => (
+                <div key={item._id} className="cart-item">
+                  <div className="item-info">
+                    <p className="item-name">{item.name}</p>
+                    <p className="item-price">₹{item.price}</p>
+                  </div>
+                  <div className="item-controls">
+                    <button onClick={() => updateQuantity(item._id, item.quantity - 1)}>-</button>
+                    <span>{item.quantity}</span>
+                    <button onClick={() => updateQuantity(item._id, item.quantity + 1)}>+</button>
+                  </div>
+                  <button className="remove-btn" onClick={() => removeFromCart(item._id)}>
+                    ×
+                  </button>
+                </div>
+              ))}
+            </div>
+            <div className="cart-summary">
+              <div className="summary-row">
+                <span>Subtotal</span>
+                <span>₹{calculateTotal()}</span>
+              </div>
+              <div className="summary-row total">
+                <span>Total</span>
+                <span>₹{calculateTotal()}</span>
+              </div>
+            </div>
+            <button className="checkout-btn" onClick={() => navigate("/checkout", { state: { cart } })}>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                <path d="M5 12h14M12 5l7 7-7 7" />
+              </svg>
+              Proceed to Checkout
+            </button>
+          </>
+        )}
+      </div>
+
+      {/* Overlay */}
+      {showCart && <div className="cart-overlay" onClick={() => setShowCart(false)}></div>}
+
+      {/* Mobile Bottom Navigation */}
+      <div className="mobile-bottom-nav">
+        <button className="mobile-nav-btn" onClick={() => navigate("/my-orders")}>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+            <path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
+          </svg>
+          <span>My Orders</span>
+        </button>
+        <button className="mobile-nav-btn" onClick={() => setShowCart(!showCart)}>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+            <circle cx="9" cy="21" r="1" />
+            <circle cx="20" cy="21" r="1" />
+            <path d="M1 1h4l2.68 13.39a2 2 0 002 1.61h9.72a2 2 0 002-1.61L23 6H6" />
+          </svg>
+          <span>Cart</span>
+          {cart.length > 0 && <span className="mobile-cart-badge">{cart.length}</span>}
+        </button>
+        <button className="mobile-nav-btn" onClick={handleLogout}>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+            <path d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
+          </svg>
+          <span>Logout</span>
+        </button>
+      </div>
+
       <div className="content">
-        <div className="menu-section">
+        <div className="menu-section-full">
           <div className="menu-header">
             <h2>Available Items</h2>
             <div className="category-filters">
@@ -196,66 +294,6 @@ function UserMenuPage() {
               </div>
             ))}
           </div>
-        </div>
-
-        <div className="cart-section">
-          <div className="cart-header">
-            <svg className="cart-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-              <path d="M9 2L7.17 4H3a1 1 0 00-1 1v14a1 1 0 001 1h18a1 1 0 001-1V5a1 1 0 00-1-1h-4.17L15 2H9z" />
-              <circle cx="12" cy="13" r="3" />
-            </svg>
-            <h2>Your Cart</h2>
-            {cart.length > 0 && <span className="cart-count">{cart.length}</span>}
-          </div>
-
-          {cart.length === 0 ? (
-            <div className="empty-cart-state">
-              <svg className="empty-cart-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                <circle cx="9" cy="21" r="1" />
-                <circle cx="20" cy="21" r="1" />
-                <path d="M1 1h4l2.68 13.39a2 2 0 002 1.61h9.72a2 2 0 002-1.61L23 6H6" />
-              </svg>
-              <p>Your cart is empty</p>
-              <span>Add items to get started</span>
-            </div>
-          ) : (
-            <>
-              <div className="cart-items">
-                {cart.map((item) => (
-                  <div key={item._id} className="cart-item">
-                    <div className="item-info">
-                      <p className="item-name">{item.name}</p>
-                      <p className="item-price">₹{item.price}</p>
-                    </div>
-                    <div className="item-controls">
-                      <button onClick={() => updateQuantity(item._id, item.quantity - 1)}>-</button>
-                      <span>{item.quantity}</span>
-                      <button onClick={() => updateQuantity(item._id, item.quantity + 1)}>+</button>
-                    </div>
-                    <button className="remove-btn" onClick={() => removeFromCart(item._id)}>
-                      ×
-                    </button>
-                  </div>
-                ))}
-              </div>
-              <div className="cart-summary">
-                <div className="summary-row">
-                  <span>Subtotal</span>
-                  <span>₹{calculateTotal()}</span>
-                </div>
-                <div className="summary-row total">
-                  <span>Total</span>
-                  <span>₹{calculateTotal()}</span>
-                </div>
-              </div>
-              <button className="checkout-btn" onClick={() => navigate("/checkout", { state: { cart } })}>
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                  <path d="M5 12h14M12 5l7 7-7 7" />
-                </svg>
-                Proceed to Checkout
-              </button>
-            </>
-          )}
         </div>
       </div>
     </div>
