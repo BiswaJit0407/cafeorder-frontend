@@ -25,6 +25,7 @@
 }
 
 .menu-btn,
+.combo-btn,
 .offers-btn,
 .reviews-btn,
 .analytics-btn,
@@ -40,6 +41,7 @@
 }
 
 .menu-btn:hover,
+.combo-btn:hover,
 .offers-btn:hover,
 .reviews-btn:hover,
 .analytics-btn:hover,

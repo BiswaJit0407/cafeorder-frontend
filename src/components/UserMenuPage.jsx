@@ -10,6 +10,7 @@ import "./UserMenu.css"
 function UserMenuPage() {
   const [menuItems, setMenuItems] = useState([])
   const [filteredItems, setFilteredItems] = useState([])
+  const [combos, setCombos] = useState([])
   const [selectedCategory, setSelectedCategory] = useState("All")
   const [cart, setCart] = useState(() => {
     const savedCart = localStorage.getItem("cart")
@@ -21,7 +22,7 @@ function UserMenuPage() {
   const token = localStorage.getItem("token")
   const navigate = useNavigate()
 
-  const categories = ["All", "Appetizer", "Main Course", "Dessert", "Beverage", "Special"]
+  const categories = ["All", "Combos", "Appetizer", "Main Course", "Dessert", "Beverage", "Special"]
 
   useEffect(() => {
     const fetchMenu = async () => {
@@ -41,12 +42,24 @@ function UserMenuPage() {
     }
 
     fetchMenu()
+    fetchCombos()
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
+
+  const fetchCombos = async () => {
+    try {
+      const response = await axios.get(`${API_URL}/api/combos`)
+      setCombos(response.data)
+    } catch (err) {
+      console.error("Failed to load combos:", err)
+    }
+  }
 
   useEffect(() => {
     if (selectedCategory === "All") {
       setFilteredItems(menuItems)
+    } else if (selectedCategory === "Combos") {
+      setFilteredItems([])
     } else {
       setFilteredItems(menuItems.filter((item) => item.category === selectedCategory))
     }
@@ -289,20 +302,50 @@ function UserMenuPage() {
             </div>
           </div>
           {error && <div className="error-message">{error}</div>}
-          <div className="menu-grid">
-            {filteredItems.map((item) => (
-              <div key={item._id} className="menu-card">
-                {item.image && (
-                  <img src={item.image} alt={item.name} className="menu-item-image" />
-                )}
-                <h3>{item.name}</h3>
-                <p>{item.description}</p>
-                <p className="price">₹{item.price}</p>
-                <p className="category">{item.category}</p>
-                <button onClick={() => addToCart(item)}>Add to Cart</button>
-              </div>
-            ))}
-          </div>
+          
+          {selectedCategory === "Combos" ? (
+            <div className="menu-grid">
+              {combos.map((combo) => (
+                <div key={combo._id} className="menu-card combo-card-user">
+                  {combo.image && (
+                    <img src={combo.image} alt={combo.name} className="menu-item-image" />
+                  )}
+                  <div className="combo-badge">COMBO OFFER</div>
+                  <h3>{combo.name}</h3>
+                  <p>{combo.description}</p>
+                  <div className="combo-items-preview">
+                    <strong>Includes:</strong>
+                    <ul>
+                      {combo.items.map((item, index) => (
+                        <li key={index}>{item.name} x{item.quantity}</li>
+                      ))}
+                    </ul>
+                  </div>
+                  <div className="combo-pricing-user">
+                    <span className="original-price-user">₹{combo.originalPrice}</span>
+                    <span className="combo-price-user">₹{combo.comboPrice}</span>
+                    <span className="discount-badge-user">{combo.discount}% OFF</span>
+                  </div>
+                  <button onClick={() => addToCart({ ...combo, price: combo.comboPrice, isCombo: true })}>Add to Cart</button>
+                </div>
+              ))}
+            </div>
+          ) : (
+            <div className="menu-grid">
+              {filteredItems.map((item) => (
+                <div key={item._id} className="menu-card">
+                  {item.image && (
+                    <img src={item.image} alt={item.name} className="menu-item-image" />
+                  )}
+                  <h3>{item.name}</h3>
+                  <p>{item.description}</p>
+                  <p className="price">₹{item.price}</p>
+                  <p className="category">{item.category}</p>
+                  <button onClick={() => addToCart(item)}>Add to Cart</button>
+                </div>
+              ))}
+            </div>
+          )}
         </div>
       </div>
     </div>

@@ -601,3 +601,66 @@
     grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
   }
 }
+
+/* Combo Cards */
+.combo-card-user {
+  position: relative;
+}
+
+.combo-badge {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: #4caf50;
+  color: white;
+  padding: 5px 12px;
+  border-radius: 20px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  z-index: 1;
+}
+
+.combo-items-preview {
+  margin: 10px 0;
+  font-size: 0.9rem;
+}
+
+.combo-items-preview ul {
+  margin: 5px 0 0 20px;
+  padding: 0;
+  list-style: disc;
+}
+
+.combo-items-preview li {
+  margin: 3px 0;
+  color: #666;
+}
+
+.combo-pricing-user {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 15px 0;
+  flex-wrap: wrap;
+}
+
+.original-price-user {
+  text-decoration: line-through;
+  color: #999;
+  font-size: 1rem;
+}
+
+.combo-price-user {
+  font-size: 1.3rem;
+  font-weight: bold;
+  color: #ff6b35;
+}
+
+.discount-badge-user {
+  background: #4caf50;
+  color: white;
+  padding: 4px 10px;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  font-weight: 600;
+}

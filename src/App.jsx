@@ -13,6 +13,7 @@ import Analytics from "./components/Analytics"
 import MenuManagement from "./components/MenuManagement"
 import OfferManagement from "./components/OfferManagement"
 import ReviewManagement from "./components/ReviewManagement"
+import ComboManagement from "./components/ComboManagement"
 
 function ProtectedRoute({ component, role }) {
   const token = localStorage.getItem("token")
@@ -57,6 +58,7 @@ function App() {
         <Route path="/menu-management" element={<ProtectedRoute component={<MenuManagement />} role="admin" />} />
         <Route path="/offer-management" element={<ProtectedRoute component={<OfferManagement />} role="admin" />} />
         <Route path="/review-management" element={<ProtectedRoute component={<ReviewManagement />} role="admin" />} />
+        <Route path="/combo-management" element={<ProtectedRoute component={<ComboManagement />} role="admin" />} />
       </Routes>
     </Router>
   )
