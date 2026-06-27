@@ -1,0 +1,132 @@
+.settings-container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 1rem 0;
+  animation: fadeIn 0.4s ease-out;
+}
+
+.settings-section {
+  background: var(--bg-card);
+  border-radius: var(--radius-lg);
+  padding: 1.5rem 2rem;
+  box-shadow: var(--shadow-sm);
+  margin-bottom: 2rem;
+  border: 1px solid rgba(42, 27, 20, 0.05);
+}
+
+.section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px dashed rgba(42, 27, 20, 0.1);
+  padding-bottom: 1rem;
+  margin-bottom: 0.5rem;
+}
+
+.section-header h2 {
+  margin: 0;
+  font-family: var(--font-heading);
+  color: var(--secondary-color);
+  font-weight: 800;
+}
+
+.section-description {
+  color: var(--text-light);
+  font-size: 0.9rem;
+  margin-bottom: 1.5rem;
+}
+
+.settings-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 1.5rem;
+  transition: opacity 0.3s;
+}
+
+.settings-grid.disabled {
+  opacity: 0.5;
+  pointer-events: none;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.form-group label {
+  font-weight: 600;
+  color: var(--text-dark);
+  font-size: 0.9rem;
+}
+
+.form-group input {
+  padding: 0.6rem 0.8rem;
+  border: 1px solid rgba(42, 27, 20, 0.1);
+  border-radius: var(--radius-sm);
+  font-family: var(--font-body);
+  width: 100%;
+}
+
+.input-with-prefix, .input-with-suffix {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.input-with-prefix span {
+  position: absolute;
+  left: 0.8rem;
+  color: var(--text-light);
+  font-weight: 600;
+}
+
+.input-with-prefix input {
+  padding-left: 1.8rem;
+}
+
+.input-with-suffix span {
+  position: absolute;
+  right: 1.2rem;
+  color: var(--text-light);
+  font-weight: 600;
+}
+
+.input-with-suffix input {
+  padding-right: 2rem;
+}
+
+.form-group small {
+  color: var(--text-light);
+  font-size: 0.75rem;
+}
+
+.form-actions {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 2rem;
+}
+
+.save-settings-btn {
+  background: var(--primary-color);
+  color: white;
+  border: none;
+  padding: 0.75rem 2rem;
+  border-radius: var(--radius-pill);
+  font-family: var(--font-heading);
+  font-weight: 700;
+  font-size: 1rem;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(255, 107, 53, 0.3);
+  transition: all 0.2s;
+}
+
+.save-settings-btn:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(255, 107, 53, 0.4);
+}
+
+.save-settings-btn:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}

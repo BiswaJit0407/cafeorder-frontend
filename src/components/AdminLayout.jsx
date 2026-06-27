@@ -22,6 +22,7 @@ function AdminLayout({ children, title }) {
     { name: "Coupons", path: "/offer-management" },
     { name: "Reviews", path: "/review-management" },
     { name: "Analytics", path: "/analytics" },
+    { name: "Settings", path: "/admin-settings" },
   ]
 
   return (

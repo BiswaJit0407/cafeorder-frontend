@@ -359,9 +359,40 @@ function MenuManagement() {
         )}
 
         <div className="menu-items-list">
-          <h2>Menu Items ({menuItems.length})</h2>
+          <div style={{ display: "flex", flexDirection: "column", gap: "1rem", marginBottom: "1.5rem" }}>
+            <h2>Menu Items ({menuItems.length})</h2>
+            <div className="category-tabs" style={{ display: "flex", gap: "0.5rem", overflowX: "auto", paddingBottom: "0.5rem" }}>
+              <button 
+                onClick={() => setFormData({ ...formData, filterCategory: "All" })}
+                style={{ 
+                  padding: "0.5rem 1.25rem", borderRadius: "20px", border: "none", 
+                  background: (formData.filterCategory || "All") === "All" ? "var(--primary-color)" : "rgba(0,0,0,0.05)", 
+                  color: (formData.filterCategory || "All") === "All" ? "white" : "var(--text-dark)", 
+                  cursor: "pointer", fontWeight: "600", whiteSpace: "nowrap", transition: "all 0.2s"
+                }}
+              >
+                All
+              </button>
+              {categories.map(cat => (
+                <button 
+                  key={cat}
+                  onClick={() => setFormData({ ...formData, filterCategory: cat })}
+                  style={{ 
+                    padding: "0.5rem 1.25rem", borderRadius: "20px", border: "none", 
+                    background: formData.filterCategory === cat ? "var(--primary-color)" : "rgba(0,0,0,0.05)", 
+                    color: formData.filterCategory === cat ? "white" : "var(--text-dark)", 
+                    cursor: "pointer", fontWeight: "600", whiteSpace: "nowrap", transition: "all 0.2s"
+                  }}
+                >
+                  {cat}
+                </button>
+              ))}
+            </div>
+          </div>
           <div className="items-grid">
-            {menuItems.map((item) => (
+            {menuItems
+              .filter(item => (formData.filterCategory && formData.filterCategory !== "All") ? item.category === formData.filterCategory : true)
+              .map((item) => (
               <div key={item._id} className={`item-card ${!item.available ? "unavailable" : ""}`}>
                 {item.image && <img src={item.image} alt={item.name} className="item-image" />}
                 <div className="item-content">

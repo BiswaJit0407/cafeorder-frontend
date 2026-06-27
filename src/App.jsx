@@ -16,6 +16,7 @@ import ReviewManagement from "./components/ReviewManagement"
 import SpecialOfferManagement from "./components/SpecialOfferManagement"
 import ComboManagement from "./components/ComboManagement"
 import TableManagement from "./components/TableManagement"
+import AdminSettings from "./components/AdminSettings"
 import UserProfile from "./components/UserProfile"
 import { SocketProvider } from "./context/SocketContext"
 
@@ -67,6 +68,7 @@ function App() {
           <Route path="/special-offers" element={<ProtectedRoute component={<SpecialOfferManagement />} role="admin" />} />
           <Route path="/combo-management" element={<ProtectedRoute component={<ComboManagement />} role="admin" />} />
           <Route path="/table-management" element={<ProtectedRoute component={<TableManagement />} role="admin" />} />
+          <Route path="/admin-settings" element={<ProtectedRoute component={<AdminSettings />} role="admin" />} />
         </Routes>
       </SocketProvider>
     </Router>

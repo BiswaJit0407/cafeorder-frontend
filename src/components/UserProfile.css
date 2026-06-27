@@ -149,3 +149,102 @@
     padding: 0 1rem;
   }
 }
+
+/* Loyalty Wallet Styles */
+.loyalty-wallet {
+  background: linear-gradient(145deg, #1A1A1A, #2A2A2A);
+  margin: 0 2rem 2rem 2rem;
+  border-radius: var(--radius-lg);
+  padding: 1.5rem;
+  color: white;
+  text-align: left;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+  border: 1px solid rgba(255,255,255,0.05);
+}
+
+.loyalty-header h3 {
+  margin: 0 0 0.5rem 0;
+  font-family: var(--font-heading);
+  color: #a8a8a8;
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.loyalty-balance {
+  display: flex;
+  align-items: baseline;
+  gap: 0.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.loyalty-balance .points {
+  font-size: 2.5rem;
+  font-weight: 800;
+  font-family: var(--font-heading);
+  background: linear-gradient(135deg, #FFD700, #FFA500);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.loyalty-balance .value {
+  color: #888;
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+.loyalty-transactions {
+  border-top: 1px solid rgba(255,255,255,0.1);
+  padding-top: 1rem;
+}
+
+.loyalty-transactions h4 {
+  margin: 0 0 1rem 0;
+  font-size: 0.8rem;
+  color: #888;
+  text-transform: uppercase;
+}
+
+.loyalty-transactions ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+}
+
+.loyalty-transactions li {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.85rem;
+}
+
+.tx-info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+
+.tx-desc {
+  color: #eee;
+}
+
+.tx-date {
+  color: #666;
+  font-size: 0.75rem;
+}
+
+.tx-points {
+  font-weight: 700;
+  font-family: var(--font-heading);
+}
+
+.earned .tx-points {
+  color: #4CAF50;
+}
+
+.redeemed .tx-points {
+  color: #F44336;
+}

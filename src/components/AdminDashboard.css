@@ -281,7 +281,8 @@
   }
 
   .admin-layout-sidebar,
-  .admin-header {
+  .admin-header,
+  .kanban-instruction-banner {
     display: none !important;
   }
 
