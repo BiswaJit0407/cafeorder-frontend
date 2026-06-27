@@ -5,7 +5,7 @@ import axios from "axios"
 import { useNavigate } from "react-router-dom"
 import { toast } from "react-toastify"
 import { API_URL } from "../config/api"
-import NotificationBell from "./NotificationBell"
+import AdminLayout from "./AdminLayout"
 import "./SpecialOfferManagement.css"
 
 function SpecialOfferManagement() {
@@ -283,31 +283,7 @@ function SpecialOfferManagement() {
   }
 
   return (
-    <div className="special-offer-management-container">
-      <div className="admin-header">
-        <div className="header-content">
-          <h1>Special Offers Management</h1>
-          <div className="header-buttons">
-            <button className="dashboard-btn" onClick={() => navigate("/admin-dashboard")}>
-              Dashboard
-            </button>
-            <button className="menu-btn" onClick={() => navigate("/menu-management")}>
-              Menu
-            </button>
-            <button className="coupons-btn" onClick={() => navigate("/offer-management")}>
-              Coupons
-            </button>
-            <button className="reviews-btn" onClick={() => navigate("/review-management")}>
-              Reviews
-            </button>
-            <NotificationBell />
-            <button className="logout-btn" onClick={handleLogout}>
-              Logout
-            </button>
-          </div>
-        </div>
-      </div>
-
+    <AdminLayout title="Special Offers Management">
       <div className="special-offer-management-content">
         <button className="create-offer-btn" onClick={() => setShowForm(!showForm)}>
           {showForm ? "Cancel" : "+ Create New Special Offer"}
@@ -603,7 +579,7 @@ function SpecialOfferManagement() {
           )}
         </div>
       </div>
-    </div>
+    </AdminLayout>
   )
 }
 

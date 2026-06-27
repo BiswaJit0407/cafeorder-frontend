@@ -5,6 +5,7 @@ import axios from "axios"
 import { useNavigate } from "react-router-dom"
 import { toast } from "react-toastify"
 import { API_URL } from "../config/api"
+import AdminLayout from "./AdminLayout"
 import "./ComboManagement.css"
 
 function ComboManagement() {
@@ -227,30 +228,7 @@ function ComboManagement() {
   }
 
   return (
-    <div className="combo-management-container">
-      <div className="admin-header">
-        <div className="header-content">
-          <h1>Combo Management</h1>
-          <div className="header-buttons">
-            <button className="dashboard-btn" onClick={() => navigate("/admin-dashboard")}>
-              Dashboard
-            </button>
-            <button className="menu-btn" onClick={() => navigate("/menu-management")}>
-              Menu
-            </button>
-            <button className="offers-btn" onClick={() => navigate("/offer-management")}>
-              Offers
-            </button>
-            <button className="reviews-btn" onClick={() => navigate("/review-management")}>
-              Reviews
-            </button>
-            <button className="logout-btn" onClick={handleLogout}>
-              Logout
-            </button>
-          </div>
-        </div>
-      </div>
-
+    <AdminLayout title="Combo Management">
       <div className="combo-management-content">
         <button className="create-combo-btn" onClick={() => setShowForm(!showForm)}>
           {showForm ? "Cancel" : "+ Create New Combo"}
@@ -428,7 +406,7 @@ function ComboManagement() {
           )}
         </div>
       </div>
-    </div>
+    </AdminLayout>
   )
 }
 

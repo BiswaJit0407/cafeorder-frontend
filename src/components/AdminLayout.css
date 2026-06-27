@@ -1,0 +1,151 @@
+/* AdminLayout.css */
+:root {
+  --admin-primary: #FF6B35;
+  --admin-primary-hover: #E85A28;
+  --admin-bg: #FDFBF7;
+  --admin-card: #FFFFFF;
+  --admin-text: #2A1B14;
+}
+
+.admin-layout-container {
+  min-height: 100vh;
+  background: var(--admin-bg);
+  font-family: 'Inter', 'Outfit', sans-serif;
+  color: var(--admin-text);
+}
+
+.unified-admin-header {
+  background: linear-gradient(135deg, #FF6B35 0%, #F7B731 100%);
+  color: white;
+  padding: 20px 30px;
+  box-shadow: 0 4px 15px rgba(255, 107, 53, 0.2);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.unified-admin-header .header-content {
+  max-width: 1400px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 15px;
+}
+
+.header-branding h1 {
+  margin: 0;
+  font-size: 1.8rem;
+  font-weight: 700;
+  letter-spacing: -0.5px;
+}
+
+.header-branding p {
+  margin: 5px 0 0;
+  font-size: 0.9rem;
+  opacity: 0.9;
+}
+
+.header-navigation {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.nav-btn {
+  background: rgba(255, 255, 255, 0.15);
+  color: white;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  padding: 8px 16px;
+  border-radius: 20px;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 0.9rem;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(5px);
+}
+
+.nav-btn:hover {
+  background: rgba(255, 255, 255, 0.3);
+  transform: translateY(-2px);
+}
+
+.nav-btn.active {
+  background: white;
+  color: var(--admin-primary);
+  border-color: white;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-left: 10px;
+  padding-left: 15px;
+  border-left: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.unified-admin-header .logout-btn {
+  background: transparent;
+  color: white;
+  border: 1px solid white;
+  padding: 8px 16px;
+  border-radius: 20px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+.unified-admin-header .logout-btn:hover {
+  background: rgba(255, 255, 255, 0.2);
+  color: white;
+}
+
+.admin-layout-content {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 30px;
+}
+
+@media (max-width: 992px) {
+  .unified-admin-header .header-content {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  
+  .header-navigation {
+    width: 100%;
+    overflow-x: auto;
+    padding-bottom: 10px;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  
+  .header-navigation::-webkit-scrollbar {
+    display: none;
+  }
+  
+  .nav-btn {
+    white-space: nowrap;
+  }
+  
+  .header-actions {
+    margin-left: 0;
+    padding-left: 0;
+    border-left: none;
+    margin-top: 10px;
+  }
+}
+
+@media print {
+  .unified-admin-header {
+    display: none;
+  }
+  .admin-layout-content {
+    padding: 0;
+    max-width: none;
+  }
+}

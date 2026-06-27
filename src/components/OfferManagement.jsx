@@ -5,7 +5,7 @@ import axios from "axios"
 import { useNavigate } from "react-router-dom"
 import { toast } from "react-toastify"
 import { API_URL } from "../config/api"
-import NotificationBell from "./NotificationBell"
+import AdminLayout from "./AdminLayout"
 import "./OfferManagement.css"
 
 function OfferManagement() {
@@ -190,31 +190,7 @@ function OfferManagement() {
   }
 
   return (
-    <div className="offer-management-container">
-      <div className="header">
-        <div className="header-content">
-          <div>
-            <h1>Offer Management</h1>
-            <p>Welcome, {user?.name}</p>
-          </div>
-          <div className="header-buttons">
-            <button className="dashboard-btn" onClick={() => navigate("/admin-dashboard")}>
-              Orders
-            </button>
-            <button className="menu-btn" onClick={() => navigate("/menu-management")}>
-              Menu
-            </button>
-            <button className="analytics-btn" onClick={() => navigate("/analytics")}>
-              Analytics
-            </button>
-            <NotificationBell />
-            <button className="logout-btn" onClick={handleLogout}>
-              Logout
-            </button>
-          </div>
-        </div>
-      </div>
-
+    <AdminLayout title="Offer Management">
       <div className="offer-management-content">
         <div className="actions-bar">
           <button className="add-btn" onClick={() => setShowAddForm(!showAddForm)}>
@@ -428,7 +404,7 @@ function OfferManagement() {
           </div>
         </div>
       </div>
-    </div>
+    </AdminLayout>
   )
 }
 

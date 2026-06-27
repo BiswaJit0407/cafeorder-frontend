@@ -17,7 +17,7 @@ import {
 } from "chart.js"
 import { Bar, Line, Doughnut } from "react-chartjs-2"
 import { API_URL } from "../config/api"
-import NotificationBell from "./NotificationBell"
+import AdminLayout from "./AdminLayout"
 import "./Analytics.css"
 
 ChartJS.register(CategoryScale, LinearScale, BarElement, LineElement, PointElement, ArcElement, Title, Tooltip, Legend)
@@ -63,25 +63,7 @@ function Analytics() {
   }
 
   return (
-    <div className="analytics-container">
-      <div className="header">
-        <div className="header-content">
-          <div>
-            <h1>Analytics Dashboard</h1>
-            <p>Welcome, {user?.name}</p>
-          </div>
-          <div className="header-buttons">
-            <button className="dashboard-btn" onClick={() => navigate("/admin-dashboard")}>
-              Orders
-            </button>
-            <NotificationBell />
-            <button className="logout-btn" onClick={handleLogout}>
-              Logout
-            </button>
-          </div>
-        </div>
-      </div>
-
+    <AdminLayout title="Analytics Dashboard">
       <div className="analytics-content">
         <div className="period-selector">
           <button className={period === "daily" ? "active" : ""} onClick={() => setPeriod("daily")}>
@@ -271,7 +253,7 @@ function Analytics() {
           </>
         )}
       </div>
-    </div>
+    </AdminLayout>
   )
 }
 

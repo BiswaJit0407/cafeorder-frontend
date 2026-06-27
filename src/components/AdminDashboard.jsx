@@ -4,7 +4,7 @@ import { useState, useEffect } from "react"
 import axios from "axios"
 import { useNavigate } from "react-router-dom"
 import { API_URL } from "../config/api"
-import NotificationBell from "./NotificationBell"
+import AdminLayout from "./AdminLayout"
 import "./AdminDashboard.css"
 
 function AdminDashboard() {
@@ -131,36 +131,8 @@ function AdminDashboard() {
   }
 
   return (
-    <div className="admin-dashboard">
-      <div className="admin-header">
-        <div className="header-content">
-          <div>
-            <h1>Admin Dashboard</h1>
-            <p>Welcome, {user?.name}</p>
-          </div>
-          <div className="header-buttons">
-            <button className="menu-btn" onClick={() => navigate("/menu-management")}>
-              Menu
-            </button>
-            <button className="special-offers-btn" onClick={() => navigate("/special-offers")}>
-              Special Offers
-            </button>
-            <button className="coupons-btn" onClick={() => navigate("/offer-management")}>
-              Coupons
-            </button>
-            <button className="reviews-btn" onClick={() => navigate("/review-management")}>
-              Reviews
-            </button>
-            <button className="analytics-btn" onClick={() => navigate("/analytics")}>
-              Analytics
-            </button>
-            <NotificationBell />
-            <button className="logout-btn" onClick={handleLogout}>
-              Logout
-            </button>
-          </div>
-        </div>
-      </div>
+    <AdminLayout title="Orders Dashboard">
+      <div className="admin-dashboard-content">
 
       <div className="filter-section">
         <button className={filter === "all" ? "active" : ""} onClick={() => setFilter("all")}>
@@ -257,7 +229,8 @@ function AdminDashboard() {
           </div>
         )}
       </div>
-    </div>
+      </div>
+    </AdminLayout>
   )
 }
 

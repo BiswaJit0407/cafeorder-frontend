@@ -5,7 +5,7 @@ import axios from "axios"
 import { useNavigate } from "react-router-dom"
 import { toast } from "react-toastify"
 import { API_URL } from "../config/api"
-import NotificationBell from "./NotificationBell"
+import AdminLayout from "./AdminLayout"
 import "./ReviewManagement.css"
 
 function ReviewManagement() {
@@ -73,31 +73,7 @@ function ReviewManagement() {
   })
 
   return (
-    <div className="review-management-container">
-      <div className="admin-header">
-        <div className="header-content">
-          <h1>Review Management</h1>
-          <div className="header-buttons">
-            <button className="dashboard-btn" onClick={() => navigate("/admin-dashboard")}>
-              Dashboard
-            </button>
-            <button className="menu-btn" onClick={() => navigate("/menu-management")}>
-              Menu
-            </button>
-            <button className="offers-btn" onClick={() => navigate("/offer-management")}>
-              Offers
-            </button>
-            <button className="analytics-btn" onClick={() => navigate("/analytics")}>
-              Analytics
-            </button>
-            <NotificationBell />
-            <button className="logout-btn" onClick={handleLogout}>
-              Logout
-            </button>
-          </div>
-        </div>
-      </div>
-
+    <AdminLayout title="Review Management">
       <div className="review-management-content">
         <div className="filter-section">
           <button className={filter === "all" ? "active" : ""} onClick={() => setFilter("all")}>
@@ -169,7 +145,7 @@ function ReviewManagement() {
           </div>
         )}
       </div>
-    </div>
+    </AdminLayout>
   )
 }
 

@@ -1,54 +1,4 @@
-.admin-dashboard {
-  min-height: 100vh;
-  background: #f5f5f5;
-  font-family: "Arial", sans-serif;
-  padding: 20px;
-}
 
-.admin-header {
-  background: linear-gradient(135deg, #ff6b35 0%, #e55a2b 100%);
-  color: white;
-  padding: 30px;
-  border-radius: 12px;
-  margin-bottom: 30px;
-}
-
-.admin-header .header-content {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.admin-header .header-buttons {
-  display: flex;
-  gap: 10px;
-}
-
-.menu-btn,
-.special-offers-btn,
-.coupons-btn,
-.reviews-btn,
-.analytics-btn,
-.logout-btn {
-  background: rgba(255, 255, 255, 0.2);
-  color: white;
-  border: 2px solid white;
-  padding: 10px 20px;
-  border-radius: 5px;
-  cursor: pointer;
-  font-weight: bold;
-  transition: all 0.3s ease;
-}
-
-.menu-btn:hover,
-.special-offers-btn:hover,
-.coupons-btn:hover,
-.reviews-btn:hover,
-.analytics-btn:hover,
-.logout-btn:hover {
-  background: white;
-  color: #ff6b35;
-}
 
 .filter-section {
   display: flex;
@@ -241,7 +191,6 @@
     background: white;
   }
 
-  .admin-header,
   .filter-section {
     display: none;
   }
