@@ -1,0 +1,215 @@
+.user-layout-container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  background: var(--bg-main);
+  font-family: var(--font-body);
+  color: var(--text-dark);
+}
+
+.user-layout-main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ================= HEADER ================= */
+.user-header {
+  background: var(--bg-glass);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  color: var(--secondary-color);
+  padding: 1.25rem 2rem;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  border-bottom: 1px solid rgba(42, 27, 20, 0.05);
+  box-shadow: var(--shadow-sm);
+}
+
+.user-header-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.user-header-info h1 {
+  font-family: var(--font-heading);
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: var(--secondary-color);
+  margin-bottom: 0.2rem;
+  letter-spacing: -0.5px;
+}
+
+.user-header-info p {
+  color: var(--text-gray);
+  font-size: 0.95rem;
+  font-weight: 500;
+  margin: 0;
+}
+
+.user-header-buttons {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+}
+
+.user-nav-pill-btn {
+  background: var(--bg-card);
+  color: var(--secondary-color);
+  border: 1px solid rgba(42, 27, 20, 0.08);
+  padding: 0.6rem 1.25rem;
+  border-radius: var(--radius-pill);
+  cursor: pointer;
+  font-weight: 600;
+  font-family: var(--font-heading);
+  transition: var(--transition-fast);
+  box-shadow: var(--shadow-sm);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.user-nav-pill-btn:hover {
+  border-color: var(--primary-color);
+  color: var(--primary-color);
+  transform: translateY(-2px);
+}
+
+.user-cart-btn {
+  background: var(--primary-color);
+  color: white;
+  border: none;
+  position: relative;
+}
+
+.user-cart-btn:hover {
+  background: var(--primary-hover);
+  color: white;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(255, 107, 53, 0.3);
+}
+
+.user-cart-icon-nav {
+  width: 20px;
+  height: 20px;
+}
+
+.user-cart-badge {
+  position: absolute;
+  top: -6px;
+  right: -6px;
+  background: var(--secondary-color);
+  color: white;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.75rem;
+  font-weight: 800;
+  font-family: var(--font-heading);
+  border: 2px solid var(--bg-card);
+}
+
+.user-logout-btn {
+  background: transparent;
+  color: #D32F2F;
+  border: 1px solid rgba(211, 47, 47, 0.2);
+  box-shadow: none;
+}
+.user-logout-btn:hover {
+  background: #FFF5F5;
+  border-color: #D32F2F;
+  color: #D32F2F;
+}
+
+/* ================= MOBILE BOTTOM NAVIGATION ================= */
+.user-mobile-bottom-nav {
+  display: none;
+}
+
+/* ================= RESPONSIVE ADJUSTMENTS ================= */
+
+@media (max-width: 768px) {
+  .user-layout-main {
+    padding-bottom: 80px;
+  }
+
+  .user-header-content {
+    flex-direction: column;
+    text-align: center;
+    gap: 1rem;
+  }
+  
+  .user-header-buttons {
+    display: none; /* Hide top nav buttons on mobile */
+  }
+
+  .user-mobile-bottom-nav {
+    display: flex;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    box-sizing: border-box; /* Fix for horizontal overflow */
+    background: var(--bg-glass);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border-top: 1px solid rgba(42, 27, 20, 0.08);
+    padding: 0.5rem 1rem;
+    padding-bottom: calc(0.5rem + env(safe-area-inset-bottom));
+    justify-content: space-between;
+    z-index: 1000;
+    box-shadow: 0 -4px 24px rgba(42, 27, 20, 0.06);
+  }
+
+  .user-mobile-nav-btn {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.25rem;
+    background: transparent;
+    border: none;
+    color: var(--text-light);
+    font-size: 0.75rem;
+    font-weight: 600;
+    font-family: var(--font-heading);
+    cursor: pointer;
+    position: relative;
+    padding: 0.25rem 0.5rem;
+    transition: var(--transition-fast);
+  }
+
+  .user-mobile-nav-btn svg {
+    width: 22px;
+    height: 22px;
+    margin-bottom: 2px;
+  }
+
+  .user-mobile-nav-btn:hover,
+  .user-mobile-nav-btn:active {
+    color: var(--primary-color);
+  }
+
+  .user-mobile-cart-badge {
+    position: absolute;
+    top: -2px;
+    right: 4px;
+    background: var(--primary-color);
+    color: white;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.65rem;
+    font-weight: 800;
+    border: 1.5px solid var(--bg-card);
+  }
+}

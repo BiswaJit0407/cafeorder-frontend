@@ -4,6 +4,7 @@ import { useState, useEffect } from "react"
 import axios from "axios"
 import { useNavigate } from "react-router-dom"
 import { API_URL } from "../config/api"
+import UserLayout from "./UserLayout"
 import "./UserOrders.css"
 
 function UserOrders() {
@@ -54,24 +55,7 @@ function UserOrders() {
   }
 
   return (
-    <div className="user-orders-container">
-      <div className="header">
-        <div className="header-content">
-          <div>
-            <h1>My Orders</h1>
-            <p>Welcome, {user?.name}</p>
-          </div>
-          <div className="header-buttons">
-            <button className="menu-btn" onClick={() => navigate("/user-menu")}>
-              Back to Menu
-            </button>
-            <button className="logout-btn" onClick={handleLogout}>
-              Logout
-            </button>
-          </div>
-        </div>
-      </div>
-
+    <UserLayout title="My Orders">
       <div className="orders-content">
         {error && <div className="error-message">{error}</div>}
 
@@ -149,7 +133,7 @@ function UserOrders() {
           </div>
         )}
       </div>
-    </div>
+    </UserLayout>
   )
 }
 

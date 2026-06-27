@@ -5,7 +5,7 @@ import axios from "axios"
 import { useNavigate } from "react-router-dom"
 import { toast } from "react-toastify"
 import { API_URL } from "../config/api"
-import NotificationBell from "./NotificationBell"
+import UserLayout from "./UserLayout"
 import "./UserMenu.css"
 
 function UserMenuPage() {
@@ -134,38 +134,7 @@ function UserMenuPage() {
   const [showCart, setShowCart] = useState(false)
 
   return (
-    <div className="user-menu-container">
-      {/* Header */}
-      <header className="header">
-        <div className="header-content">
-          <div className="header-info">
-            <h1>Little Cup Cafe</h1>
-            <p>Welcome back, {user?.name}</p>
-          </div>
-          <div className="header-buttons">
-            <button className="nav-pill-btn" onClick={() => navigate("/my-orders")}>
-              Orders
-            </button>
-            <button className="nav-pill-btn" onClick={() => navigate("/my-reviews")}>
-              Reviews
-            </button>
-            <NotificationBell />
-            <button className="nav-pill-btn cart-btn" onClick={() => setShowCart(!showCart)}>
-              <svg className="cart-icon-nav" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                <circle cx="9" cy="21" r="1"></circle>
-                <circle cx="20" cy="21" r="1"></circle>
-                <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
-              </svg>
-              Cart
-              {cart.length > 0 && <span className="cart-badge">{cart.length}</span>}
-            </button>
-            <button className="nav-pill-btn logout-btn" onClick={handleLogout}>
-              Logout
-            </button>
-          </div>
-        </div>
-      </header>
-
+    <UserLayout onCartClick={() => setShowCart(!showCart)} cartCount={cart.length}>
       {/* Main Split Layout */}
       <div className="main-wrapper">
         
@@ -356,43 +325,8 @@ function UserMenuPage() {
         )}
       </div>
 
-      {/* Overlay */}
       {showCart && <div className="cart-overlay" onClick={() => setShowCart(false)}></div>}
-
-      {/* Mobile Bottom Navigation Component */}
-      <div className="mobile-bottom-nav">
-        <button className="mobile-nav-btn" onClick={() => navigate("/my-orders")}>
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-            <path d="M9 5H7a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-2M9 5a2 2 0 0 0 2 2h2a2 2 0 0 0 2-2M9 5a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2" />
-          </svg>
-          <span>Orders</span>
-        </button>
-        <button className="mobile-nav-btn" onClick={() => navigate("/my-reviews")}>
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-            <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/>
-          </svg>
-          <span>Reviews</span>
-        </button>
-        <NotificationBell isMobile={true} />
-        <button className="mobile-nav-btn" onClick={() => setShowCart(!showCart)}>
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-            <circle cx="9" cy="21" r="1" />
-            <circle cx="20" cy="21" r="1" />
-            <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6" />
-          </svg>
-          <span>Cart</span>
-          {cart.length > 0 && <span className="mobile-cart-badge">{cart.length}</span>}
-        </button>
-        <button className="mobile-nav-btn" onClick={handleLogout}>
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-            <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" />
-            <polyline points="16 17 21 12 16 7" />
-            <line x1="21" y1="12" x2="9" y2="12" />
-          </svg>
-          <span>Logout</span>
-        </button>
-      </div>
-    </div>
+    </UserLayout>
   )
 }
 

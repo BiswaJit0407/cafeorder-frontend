@@ -5,6 +5,7 @@ import axios from "axios"
 import { useNavigate, useLocation } from "react-router-dom"
 import { toast } from "react-toastify"
 import { API_URL } from "../config/api"
+import UserLayout from "./UserLayout"
 import "./Checkout.css"
 
 function Checkout() {
@@ -182,14 +183,7 @@ function Checkout() {
   }
 
   return (
-    <div className="checkout-container">
-      <div className="checkout-header">
-        <button className="back-btn" onClick={() => navigate("/user-menu")}>
-          ← Back to Menu
-        </button>
-        <h1>Checkout</h1>
-      </div>
-
+    <UserLayout title="Checkout" showCart={false}>
       <div className="checkout-content">
         <div className="checkout-main">
           <div className="cart-items-section">
@@ -318,7 +312,7 @@ function Checkout() {
           </div>
         </div>
       </div>
-    </div>
+    </UserLayout>
   )
 }
 

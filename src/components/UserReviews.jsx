@@ -5,6 +5,7 @@ import axios from "axios"
 import { useNavigate } from "react-router-dom"
 import { toast } from "react-toastify"
 import { API_URL } from "../config/api"
+import UserLayout from "./UserLayout"
 import "./UserReviews.css"
 
 function UserReviews() {
@@ -104,27 +105,7 @@ function UserReviews() {
   }
 
   return (
-    <div className="user-reviews-container">
-      <div className="header">
-        <div className="header-content">
-          <div>
-            <h1>My Reviews</h1>
-            <p>Welcome, {user?.name}</p>
-          </div>
-          <div className="header-buttons">
-            <button className="menu-btn" onClick={() => navigate("/user-menu")}>
-              Menu
-            </button>
-            <button className="orders-btn" onClick={() => navigate("/my-orders")}>
-              My Orders
-            </button>
-            <button className="logout-btn" onClick={handleLogout}>
-              Logout
-            </button>
-          </div>
-        </div>
-      </div>
-
+    <UserLayout title="My Reviews">
       <div className="reviews-content">
         <div className="review-form-section">
           <h2>{editingId ? "Edit Your Review" : "Write a Review"}</h2>
@@ -218,7 +199,7 @@ function UserReviews() {
           )}
         </div>
       </div>
-    </div>
+    </UserLayout>
   )
 }
 
