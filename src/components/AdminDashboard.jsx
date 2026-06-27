@@ -4,11 +4,13 @@ import { useState, useEffect } from "react"
 import axios from "axios"
 import { useNavigate } from "react-router-dom"
 import { API_URL } from "../config/api"
+import NotificationBell from "./NotificationBell"
 import "./AdminDashboard.css"
 
 function AdminDashboard() {
   const [orders, setOrders] = useState([])
   const [filter, setFilter] = useState("pending")
+  const [printingOrderId, setPrintingOrderId] = useState(null)
   const token = localStorage.getItem("token")
   const user = JSON.parse(localStorage.getItem("user"))
   const navigate = useNavigate()
@@ -16,6 +18,18 @@ function AdminDashboard() {
   useEffect(() => {
     fetchOrders()
   }, [filter])
+
+  useEffect(() => {
+    let timer;
+    if (printingOrderId) {
+      // Small timeout to allow the DOM to update the class
+      timer = setTimeout(() => {
+        window.print();
+        setPrintingOrderId(null);
+      }, 100);
+    }
+    return () => clearTimeout(timer);
+  }, [printingOrderId]);
 
   const fetchOrders = async () => {
     try {
@@ -140,6 +154,7 @@ function AdminDashboard() {
             <button className="analytics-btn" onClick={() => navigate("/analytics")}>
               Analytics
             </button>
+            <NotificationBell />
             <button className="logout-btn" onClick={handleLogout}>
               Logout
             </button>
@@ -174,7 +189,7 @@ function AdminDashboard() {
         ) : (
           <div className="orders-grid">
             {orders.map((order) => (
-              <div key={order._id} className="order-card">
+              <div key={order._id} className={`order-card ${printingOrderId === order._id ? "printing" : ""}`}>
                 <div className="order-header">
                   <h3>Order #{order._id.substring(0, 8)}</h3>
                   <span className="status-badge">{order.status}</span>
@@ -234,7 +249,7 @@ function AdminDashboard() {
                   </select>
                 </div>
 
-                <button className="print-btn" onClick={() => window.print()}>
+                <button className="print-btn" onClick={() => setPrintingOrderId(order._id)}>
                   Print Bill
                 </button>
               </div>

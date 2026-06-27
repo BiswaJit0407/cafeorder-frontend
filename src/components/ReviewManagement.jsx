@@ -5,6 +5,7 @@ import axios from "axios"
 import { useNavigate } from "react-router-dom"
 import { toast } from "react-toastify"
 import { API_URL } from "../config/api"
+import NotificationBell from "./NotificationBell"
 import "./ReviewManagement.css"
 
 function ReviewManagement() {
@@ -89,6 +90,7 @@ function ReviewManagement() {
             <button className="analytics-btn" onClick={() => navigate("/analytics")}>
               Analytics
             </button>
+            <NotificationBell />
             <button className="logout-btn" onClick={handleLogout}>
               Logout
             </button>

@@ -17,6 +17,7 @@ import {
 } from "chart.js"
 import { Bar, Line, Doughnut } from "react-chartjs-2"
 import { API_URL } from "../config/api"
+import NotificationBell from "./NotificationBell"
 import "./Analytics.css"
 
 ChartJS.register(CategoryScale, LinearScale, BarElement, LineElement, PointElement, ArcElement, Title, Tooltip, Legend)
@@ -73,6 +74,7 @@ function Analytics() {
             <button className="dashboard-btn" onClick={() => navigate("/admin-dashboard")}>
               Orders
             </button>
+            <NotificationBell />
             <button className="logout-btn" onClick={handleLogout}>
               Logout
             </button>

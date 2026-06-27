@@ -5,6 +5,7 @@ import axios from "axios"
 import { useNavigate } from "react-router-dom"
 import { toast } from "react-toastify"
 import { API_URL } from "../config/api"
+import NotificationBell from "./NotificationBell"
 import "./SpecialOfferManagement.css"
 
 function SpecialOfferManagement() {
@@ -299,6 +300,7 @@ function SpecialOfferManagement() {
             <button className="reviews-btn" onClick={() => navigate("/review-management")}>
               Reviews
             </button>
+            <NotificationBell />
             <button className="logout-btn" onClick={handleLogout}>
               Logout
             </button>

@@ -242,10 +242,26 @@
   }
 
   .admin-header,
-  .filter-section,
-  .order-card,
-  .status-controls,
-  .print-btn {
+  .filter-section {
+    display: none;
+  }
+
+  /* Hide all order cards by default when printing */
+  .order-card {
+    display: none;
+  }
+
+  /* Show only the printing order card */
+  .order-card.printing {
+    display: block;
+    box-shadow: none;
+    padding: 0;
+    margin: 0;
+    border: none;
+  }
+
+  /* Hide everything inside the printing order card EXCEPT the bill preview */
+  .order-card.printing > *:not(.bill-preview) {
     display: none;
   }
 
@@ -253,5 +269,14 @@
     background: white;
     border: none;
     page-break-inside: avoid;
+    max-height: none;
+    overflow: visible;
+    margin: 0;
+    padding: 0;
+  }
+
+  .bill {
+    border: none;
+    padding: 0;
   }
 }

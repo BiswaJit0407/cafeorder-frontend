@@ -5,6 +5,7 @@ import axios from "axios"
 import { useNavigate } from "react-router-dom"
 import { toast } from "react-toastify"
 import { API_URL } from "../config/api"
+import NotificationBell from "./NotificationBell"
 import "./UserMenu.css"
 
 function UserMenuPage() {
@@ -18,6 +19,7 @@ function UserMenuPage() {
   })
   const [tableNumber, setTableNumber] = useState("")
   const [error, setError] = useState("")
+  const [searchQuery, setSearchQuery] = useState("")
   const user = JSON.parse(localStorage.getItem("user"))
   const token = localStorage.getItem("token")
   const navigate = useNavigate()
@@ -62,14 +64,25 @@ function UserMenuPage() {
   }
 
   useEffect(() => {
-    if (selectedCategory === "All") {
-      setFilteredItems(menuItems)
+    let filtered = menuItems;
+
+    if (selectedCategory !== "All" && selectedCategory !== "Special Offers") {
+      filtered = filtered.filter((item) => item.category === selectedCategory);
     } else if (selectedCategory === "Special Offers") {
-      setFilteredItems([])
-    } else {
-      setFilteredItems(menuItems.filter((item) => item.category === selectedCategory))
+      filtered = [];
     }
-  }, [selectedCategory, menuItems])
+
+    if (searchQuery.trim() !== "") {
+      const lowerCaseQuery = searchQuery.toLowerCase();
+      filtered = filtered.filter(
+        (item) =>
+          item.name.toLowerCase().includes(lowerCaseQuery) ||
+          (item.description && item.description.toLowerCase().includes(lowerCaseQuery))
+      );
+    }
+
+    setFilteredItems(filtered);
+  }, [selectedCategory, menuItems, searchQuery])
 
   const handleCategoryChange = (category) => {
     setSelectedCategory(category)
@@ -136,6 +149,7 @@ function UserMenuPage() {
             <button className="nav-pill-btn" onClick={() => navigate("/my-reviews")}>
               Reviews
             </button>
+            <NotificationBell />
             <button className="nav-pill-btn cart-btn" onClick={() => setShowCart(!showCart)}>
               <svg className="cart-icon-nav" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
                 <circle cx="9" cy="21" r="1"></circle>
@@ -174,10 +188,28 @@ function UserMenuPage() {
 
         {/* Right Content: Menu Grid */}
         <section className="menu-display">
+          <div className="search-bar-container">
+            <div className="search-input-wrapper">
+              <svg className="search-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <circle cx="11" cy="11" r="8"></circle>
+                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+              </svg>
+              <input
+                type="text"
+                placeholder="Search for delicious food..."
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                className="menu-search-input"
+              />
+            </div>
+          </div>
+
           <div className="menu-display-header">
             <h2>{selectedCategory}</h2>
             <span className="menu-badge-count">
-              {selectedCategory === "Special Offers" ? specialOffers.length : filteredItems.length} items
+              {selectedCategory === "Special Offers" 
+                ? specialOffers.filter(offer => offer.name.toLowerCase().includes(searchQuery.toLowerCase()) || (offer.description && offer.description.toLowerCase().includes(searchQuery.toLowerCase()))).length 
+                : filteredItems.length} items
             </span>
           </div>
 
@@ -185,7 +217,9 @@ function UserMenuPage() {
 
           {selectedCategory === "Special Offers" ? (
             <div className="menu-grid">
-              {specialOffers.map((offer) => (
+              {specialOffers
+                .filter(offer => offer.name.toLowerCase().includes(searchQuery.toLowerCase()) || (offer.description && offer.description.toLowerCase().includes(searchQuery.toLowerCase())))
+                .map((offer) => (
                 <div key={offer._id} className="menu-card special-offer-card-user">
                   <div className="special-offer-badge">{offer.badgeText || "PROMO"}</div>
                   {offer.image && (
@@ -339,6 +373,7 @@ function UserMenuPage() {
           </svg>
           <span>Reviews</span>
         </button>
+        <NotificationBell isMobile={true} />
         <button className="mobile-nav-btn" onClick={() => setShowCart(!showCart)}>
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
             <circle cx="9" cy="21" r="1" />

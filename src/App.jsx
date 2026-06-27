@@ -14,6 +14,7 @@ import MenuManagement from "./components/MenuManagement"
 import OfferManagement from "./components/OfferManagement"
 import ReviewManagement from "./components/ReviewManagement"
 import SpecialOfferManagement from "./components/SpecialOfferManagement"
+import { SocketProvider } from "./context/SocketContext"
 
 function ProtectedRoute({ component, role }) {
   const token = localStorage.getItem("token")
@@ -33,33 +34,35 @@ function ProtectedRoute({ component, role }) {
 function App() {
   return (
     <Router>
-      <ToastContainer
-        position="top-right"
-        autoClose={3000}
-        hideProgressBar={false}
-        newestOnTop={false}
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
-        theme="light"
-      />
-      <Routes>
-        <Route path="/" element={<LandingPage />} />
-        <Route path="/login" element={<LoginPage />} />
-        <Route path="/register" element={<RegisterPage />} />
-        <Route path="/user-menu" element={<ProtectedRoute component={<UserMenuPage />} role="user" />} />
-        <Route path="/checkout" element={<ProtectedRoute component={<Checkout />} role="user" />} />
-        <Route path="/my-orders" element={<ProtectedRoute component={<UserOrders />} role="user" />} />
-        <Route path="/my-reviews" element={<ProtectedRoute component={<UserReviews />} role="user" />} />
-        <Route path="/admin-dashboard" element={<ProtectedRoute component={<AdminDashboard />} role="admin" />} />
-        <Route path="/analytics" element={<ProtectedRoute component={<Analytics />} role="admin" />} />
-        <Route path="/menu-management" element={<ProtectedRoute component={<MenuManagement />} role="admin" />} />
-        <Route path="/offer-management" element={<ProtectedRoute component={<OfferManagement />} role="admin" />} />
-        <Route path="/review-management" element={<ProtectedRoute component={<ReviewManagement />} role="admin" />} />
-        <Route path="/special-offers" element={<ProtectedRoute component={<SpecialOfferManagement />} role="admin" />} />
-      </Routes>
+      <SocketProvider>
+        <ToastContainer
+          position="top-right"
+          autoClose={3000}
+          hideProgressBar={false}
+          newestOnTop={false}
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+          theme="light"
+        />
+        <Routes>
+          <Route path="/" element={<LandingPage />} />
+          <Route path="/login" element={<LoginPage />} />
+          <Route path="/register" element={<RegisterPage />} />
+          <Route path="/user-menu" element={<ProtectedRoute component={<UserMenuPage />} role="user" />} />
+          <Route path="/checkout" element={<ProtectedRoute component={<Checkout />} role="user" />} />
+          <Route path="/my-orders" element={<ProtectedRoute component={<UserOrders />} role="user" />} />
+          <Route path="/my-reviews" element={<ProtectedRoute component={<UserReviews />} role="user" />} />
+          <Route path="/admin-dashboard" element={<ProtectedRoute component={<AdminDashboard />} role="admin" />} />
+          <Route path="/analytics" element={<ProtectedRoute component={<Analytics />} role="admin" />} />
+          <Route path="/menu-management" element={<ProtectedRoute component={<MenuManagement />} role="admin" />} />
+          <Route path="/offer-management" element={<ProtectedRoute component={<OfferManagement />} role="admin" />} />
+          <Route path="/review-management" element={<ProtectedRoute component={<ReviewManagement />} role="admin" />} />
+          <Route path="/special-offers" element={<ProtectedRoute component={<SpecialOfferManagement />} role="admin" />} />
+        </Routes>
+      </SocketProvider>
     </Router>
   )
 }
