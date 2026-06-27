@@ -23,6 +23,8 @@ function Checkout() {
   const [validatingCoupon, setValidatingCoupon] = useState(false)
   const [availableCoupons, setAvailableCoupons] = useState([])
   const [showCoupons, setShowCoupons] = useState(false)
+  const [availableTables, setAvailableTables] = useState([])
+  const [myTable, setMyTable] = useState(null)
   
   const token = localStorage.getItem("token")
   const user = JSON.parse(localStorage.getItem("user"))
@@ -38,9 +40,29 @@ function Checkout() {
       setTableNumber(user.tableNumber)
     }
 
+    fetchTables()
     fetchAvailableCoupons()
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
+
+  const fetchTables = async () => {
+    try {
+      const myRes = await axios.get(`${API_URL}/api/tables/my-table`, {
+        headers: { Authorization: `Bearer ${token}` },
+      })
+      if (myRes.data.table) {
+        setMyTable(myRes.data.table)
+        setTableNumber(myRes.data.table.tableNumber)
+      } else {
+        const availRes = await axios.get(`${API_URL}/api/tables/available`, {
+          headers: { Authorization: `Bearer ${token}` },
+        })
+        setAvailableTables(availRes.data)
+      }
+    } catch (error) {
+      console.error("Failed to fetch tables:", error)
+    }
+  }
 
   const fetchAvailableCoupons = async () => {
     try {
@@ -214,13 +236,29 @@ function Checkout() {
             <h2>Order Details</h2>
             <div className="form-group">
               <label>Table Number *</label>
-              <input
-                type="number"
-                value={tableNumber}
-                onChange={(e) => setTableNumber(e.target.value)}
-                placeholder="Enter your table number"
-                required
-              />
+              {myTable ? (
+                <div className="locked-table-message">
+                  <p style={{ color: "var(--primary-color)", fontWeight: "600", marginBottom: "0.5rem" }}>
+                    You are currently seated at {myTable.name} (Table {myTable.tableNumber}).
+                  </p>
+                  <p style={{ fontSize: "0.9rem", color: "var(--text-gray)" }}>
+                    You must settle your current bill before you can switch tables.
+                  </p>
+                </div>
+              ) : (
+                <select
+                  value={tableNumber}
+                  onChange={(e) => setTableNumber(e.target.value)}
+                  required
+                >
+                  <option value="">Select an available table...</option>
+                  {availableTables.map(table => (
+                    <option key={table._id} value={table.tableNumber}>
+                      {table.name} (Table {table.tableNumber})
+                    </option>
+                  ))}
+                </select>
+              )}
             </div>
 
             <div className="form-group">

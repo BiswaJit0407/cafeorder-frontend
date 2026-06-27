@@ -15,9 +15,10 @@ function AdminLayout({ children, title }) {
 
   const navItems = [
     { name: "Dashboard", path: "/admin-dashboard" },
+    { name: "Tables", path: "/table-management" },
     { name: "Menu", path: "/menu-management" },
     { name: "Specials", path: "/special-offers" },
-    { name: "Combos", path: "/combo-management" }, /* Assuming combos is part of admin */
+    { name: "Combos", path: "/combo-management" },
     { name: "Coupons", path: "/offer-management" },
     { name: "Reviews", path: "/review-management" },
     { name: "Analytics", path: "/analytics" },
