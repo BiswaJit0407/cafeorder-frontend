@@ -922,7 +922,12 @@ h1, h2, h3, h4, h5, h6, .logo {
   transition: var(--transition-normal);
   color: white;
   text-decoration: none;
-  font-size: 1.2rem;
+}
+
+.social-icon svg {
+  width: 18px;
+  height: 18px;
+  display: block;
 }
 
 .social-icon:hover {

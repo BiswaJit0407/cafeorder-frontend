@@ -5,6 +5,46 @@
   padding: 30px 20px;
 }
 
+.filter-section {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 2.5rem;
+  justify-content: center;
+  flex-wrap: wrap;
+  background: white;
+  padding: 0.5rem;
+  border-radius: 50px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  width: fit-content;
+  margin-left: auto;
+  margin-right: auto;
+  border: 1px solid rgba(42, 27, 20, 0.05);
+}
+
+.filter-section button {
+  padding: 0.75rem 2rem;
+  background: transparent;
+  border: none;
+  color: #6c757d;
+  border-radius: 50px;
+  cursor: pointer;
+  font-weight: 700;
+  font-size: 0.95rem;
+  transition: all 0.3s ease;
+  font-family: inherit;
+}
+
+.filter-section button.active {
+  background: #ff6b35;
+  color: white;
+  box-shadow: 0 4px 12px rgba(255, 107, 53, 0.3);
+}
+
+.filter-section button:hover:not(.active) {
+  background: rgba(42, 27, 20, 0.05);
+  color: #333;
+}
+
 .reviews-grid-admin {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));

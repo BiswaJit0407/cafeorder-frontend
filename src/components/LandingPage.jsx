@@ -2,17 +2,66 @@
 
 import { useState, useEffect } from "react"
 import { useNavigate } from "react-router-dom"
-import axios from "axios"
-import { API_URL } from "../config/api"
 import "./LandingPage.css"
 
 function LandingPage() {
   const navigate = useNavigate()
-  const [featuredItems, setFeaturedItems] = useState([])
-  const [loading, setLoading] = useState(true)
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
-  const [reviews, setReviews] = useState([])
-  const [reviewsLoading, setReviewsLoading] = useState(true)
+
+  // Static Data for Instant Loading
+  const featuredItems = [
+    {
+      _id: "1",
+      name: "Authentic Masala Chai",
+      category: "Beverages",
+      description: "A warming blend of robust black tea, aromatic spices, and creamy milk brewed to perfection.",
+      price: 50.00,
+      image: "https://images.unsplash.com/photo-1561336313-0bd5e0b27ec8?w=800"
+    },
+    {
+      _id: "2",
+      name: "Paneer Tikka Wrap",
+      category: "Quick Bites",
+      description: "Grilled cottage cheese marinated in tandoori spices, wrapped with fresh veggies and mint chutney.",
+      price: 180.00,
+      image: "https://images.unsplash.com/photo-1628294895950-9805252327bc?w=800"
+    },
+    {
+      _id: "3",
+      name: "Crispy Samosa Chaat",
+      category: "Snacks",
+      description: "Crushed crispy samosas topped with tangy tamarind, sweet yogurt, and fresh cilantro.",
+      price: 120.00,
+      image: "https://images.unsplash.com/photo-1601050690597-df0568f70950?w=800"
+    }
+  ]
+
+  const reviews = [
+    {
+      _id: "r1",
+      userName: "Priya Sharma",
+      rating: 5,
+      comment: "Absolutely the best Masala Chai I've ever had! The staff is incredibly friendly and the ambiance is perfect for evening snacks.",
+      createdAt: new Date().toISOString()
+    },
+    {
+      _id: "r2",
+      userName: "Rahul Verma",
+      rating: 5,
+      comment: "The Paneer Tikka Wrap is out of this world. Fast service right to my table using their seamless online ordering system.",
+      createdAt: new Date(Date.now() - 86400000).toISOString()
+    },
+    {
+      _id: "r3",
+      userName: "Ananya Patel",
+      rating: 4,
+      comment: "Great spot! The Samosa Chaat is always fresh and tangy. It gets a bit crowded on weekends, but definitely worth the wait.",
+      createdAt: new Date(Date.now() - 172800000).toISOString()
+    }
+  ]
+
+  const loading = false
+  const reviewsLoading = false
 
   // Authentication redirect logic
   useEffect(() => {
@@ -40,40 +89,6 @@ function LandingPage() {
       document.body.classList.remove('landing-active')
     }
   }, [navigate])
-
-  // Fetch featured menu items
-  useEffect(() => {
-    const fetchFeaturedItems = async () => {
-      try {
-        const response = await axios.get(`${API_URL}/api/menu`)
-        setFeaturedItems(response.data.slice(0, 3)) // Show top 3 for cleaner layout
-      } catch (error) {
-        console.error("Failed to load featured items:", error)
-        setFeaturedItems([])
-      } finally {
-        setLoading(false)
-      }
-    }
-
-    fetchFeaturedItems()
-  }, [])
-
-  // Fetch reviews
-  useEffect(() => {
-    const fetchReviews = async () => {
-      try {
-        const response = await axios.get(`${API_URL}/api/reviews`)
-        setReviews(response.data.slice(0, 3)) // 3 reviews max for UI balance
-      } catch (error) {
-        console.error("Failed to load reviews:", error)
-        setReviews([])
-      } finally {
-        setReviewsLoading(false)
-      }
-    }
-
-    fetchReviews()
-  }, [])
 
   const toggleMobileMenu = () => {
     setMobileMenuOpen(!mobileMenuOpen)
@@ -341,12 +356,6 @@ function LandingPage() {
           <div className="footer-section footer-brand">
             <div className="footer-logo">Little Cup <span className="logo-highlight">Cafe</span></div>
             <p>Brewing happiness one cup at a time. Your neighborhood spot for fresh food, warm service, and perfect coffee.</p>
-            <div className="social-links">
-              <a href="#" className="social-icon">f</a>
-              <a href="#" className="social-icon">in</a>
-              <a href="#" className="social-icon">ig</a>
-              <a href="#" className="social-icon">x</a>
-            </div>
           </div>
           <div className="footer-section">
             <h4>Quick Links</h4>

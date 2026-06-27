@@ -371,6 +371,24 @@
   border-top: 2px solid #ff6b35;
 }
 
+.pay-at-counter-msg {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: rgba(255, 107, 53, 0.1);
+  color: #d84315;
+  padding: 12px;
+  border-radius: 8px;
+  margin-top: 15px;
+  font-size: 14px;
+  font-weight: 600;
+  border: 1px solid rgba(255, 107, 53, 0.2);
+}
+
+.pay-at-counter-msg svg {
+  flex-shrink: 0;
+}
+
 .place-order-btn {
   width: 100%;
   padding: 15px;

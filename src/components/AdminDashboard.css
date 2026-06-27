@@ -1,206 +1,319 @@
-
-
-.filter-section {
+.admin-dashboard-content {
+  padding: 1rem 1.5rem;
+  animation: fadeIn 0.5s ease-out;
+  height: calc(100vh - 80px); /* Fill remaining height minus header */
   display: flex;
-  gap: 10px;
-  margin-bottom: 30px;
-  flex-wrap: wrap;
+  flex-direction: column;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.kanban-instruction-banner {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  background: rgba(255, 107, 53, 0.1);
+  color: var(--secondary-color);
+  padding: 0.75rem 1rem;
+  border-radius: var(--radius-md);
+  margin-bottom: 1rem;
+  border-left: 4px solid var(--primary-color);
+}
+
+.kanban-instruction-banner p {
+  margin: 0;
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+
+.kanban-instruction-banner svg {
+  color: var(--primary-color);
+  flex-shrink: 0;
+}
+
+.kanban-board {
+  display: flex;
+  gap: 1.5rem;
+  overflow-x: auto;
+  flex: 1; /* Take up all available height */
+  padding-bottom: 1rem;
+}
+
+/* Scrollbar for Kanban Board */
+.kanban-board::-webkit-scrollbar {
+  height: 8px;
+}
+.kanban-board::-webkit-scrollbar-track {
+  background: rgba(42, 27, 20, 0.05);
+  border-radius: 4px;
+}
+.kanban-board::-webkit-scrollbar-thumb {
+  background: rgba(255, 107, 53, 0.3);
+  border-radius: 4px;
+}
+.kanban-board::-webkit-scrollbar-thumb:hover {
+  background: var(--primary-color);
+}
+
+.kanban-column {
+  flex: 1;
+  min-width: 220px;
+  background: rgba(42, 27, 20, 0.02);
+  border-radius: var(--radius-lg);
+  display: flex;
+  flex-direction: column;
+  border: 1px dashed rgba(42, 27, 20, 0.08);
+  transition: background 0.2s ease, border-color 0.2s ease;
+  max-height: 100%;
+}
+
+.kanban-column.drag-over {
+  background: rgba(255, 107, 53, 0.05);
+  border-color: var(--primary-color);
+}
+
+.column-header {
+  padding: 1rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid rgba(42, 27, 20, 0.05);
+}
+
+.column-header h2 {
+  font-family: var(--font-heading);
+  font-size: 1rem;
+  color: var(--secondary-color);
+  font-weight: 700;
+  margin: 0;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.column-count {
+  background: rgba(42, 27, 20, 0.1);
+  color: var(--secondary-color);
+  font-size: 0.8rem;
+  font-weight: 700;
+  padding: 0.2rem 0.5rem;
+  border-radius: var(--radius-pill);
+}
+
+.column-content {
+  padding: 0.75rem;
+  flex: 1;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+/* Scrollbar for Column Content */
+.column-content::-webkit-scrollbar {
+  width: 4px;
+}
+.column-content::-webkit-scrollbar-track {
+  background: transparent;
+}
+.column-content::-webkit-scrollbar-thumb {
+  background: rgba(42, 27, 20, 0.1);
+  border-radius: 4px;
+}
+
+.empty-column-placeholder {
+  flex: 1;
+  display: flex;
+  align-items: center;
   justify-content: center;
+  color: var(--text-light);
+  font-family: var(--font-heading);
+  font-weight: 600;
+  border: 2px dashed rgba(42, 27, 20, 0.1);
+  border-radius: var(--radius-md);
+  min-height: 120px;
 }
 
-.filter-section button {
-  padding: 10px 20px;
-  background: white;
-  border: 2px solid #ff6b35;
-  color: #ff6b35;
-  border-radius: 8px;
-  cursor: pointer;
-  font-weight: bold;
-  transition: all 0.3s ease;
+/* ================= CARD STYLES ================= */
+.kanban-card {
+  background: var(--bg-card);
+  padding: 0.85rem;
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-sm);
+  border: 1px solid rgba(42, 27, 20, 0.05);
+  cursor: grab;
+  transition: transform 0.2s, box-shadow 0.2s;
 }
 
-.filter-section button:hover {
-  background: #ff6b35;
-  color: white;
+.kanban-card:active {
+  cursor: grabbing;
+}
+
+.kanban-card:hover {
   transform: translateY(-2px);
-  box-shadow: 0 4px 8px rgba(255, 107, 53, 0.3);
-}
-
-.filter-section button.active {
-  background: #ff6b35;
-  color: white;
-}
-
-.orders-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
-  gap: 20px;
-}
-
-.order-card {
-  background: white;
-  padding: 20px;
-  border-radius: 8px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  box-shadow: var(--shadow-md);
+  border-color: rgba(255, 107, 53, 0.2);
 }
 
 .order-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 15px;
-  border-bottom: 2px solid #f0f0f0;
-  padding-bottom: 10px;
+  margin-bottom: 0.75rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px dashed rgba(42, 27, 20, 0.1);
+}
+
+.order-header h3 {
+  font-family: var(--font-heading);
+  font-size: 0.95rem;
+  color: var(--secondary-color);
+  margin: 0;
+  font-weight: 800;
 }
 
 .status-badge {
-  padding: 5px 10px;
-  background: #ff6b35;
-  color: white;
-  border-radius: 20px;
-  font-size: 12px;
-  font-weight: bold;
+  padding: 0.2rem 0.5rem;
+  border-radius: var(--radius-pill);
+  font-size: 0.7rem;
+  font-weight: 700;
+  font-family: var(--font-heading);
   text-transform: uppercase;
+  letter-spacing: 0.5px;
 }
 
+.status-pending { background: #FFF3E0; color: #E65100; }
+.status-preparing { background: #E3F2FD; color: #1565C0; }
+.status-ready { background: #F3E5F5; color: #6A1B9A; }
+.status-served { background: #E8F5E9; color: #2E7D32; }
+.status-paid { background: #E0F2F1; color: #00695C; }
+
 .order-details {
-  margin: 15px 0;
+  margin-bottom: 0.75rem;
 }
 
 .order-details p {
-  margin: 8px 0;
-  color: #333;
+  margin: 0.25rem 0;
+  color: var(--text-dark);
+  font-size: 0.8rem;
+  display: flex;
+  justify-content: space-between;
+}
+
+.order-details p strong {
+  color: var(--text-light);
+  font-weight: 600;
 }
 
 .order-items {
-  background: #f9f9f9;
-  padding: 10px;
-  border-radius: 5px;
-  margin: 15px 0;
+  background: rgba(42, 27, 20, 0.02);
+  padding: 0.5rem;
+  border-radius: var(--radius-sm);
+  margin-bottom: 0.75rem;
+  border: 1px solid rgba(42, 27, 20, 0.05);
+}
+
+.order-items strong {
+  display: block;
+  margin-bottom: 0.4rem;
+  color: var(--secondary-color);
+  font-family: var(--font-heading);
+  font-weight: 700;
+  font-size: 0.8rem;
 }
 
 .order-items ul {
-  margin: 10px 0 0 20px;
+  margin: 0;
   padding: 0;
+  list-style: none;
 }
 
 .order-items li {
-  margin: 5px 0;
-  color: #666;
+  margin: 0.2rem 0;
+  color: var(--text-dark);
+  font-size: 0.75rem;
+  display: flex;
+  justify-content: space-between;
+  border-bottom: 1px dashed rgba(42, 27, 20, 0.05);
+  padding-bottom: 0.2rem;
 }
 
-.bill-preview {
-  background: #fff9c4;
-  padding: 15px;
-  border: 1px solid #f9d84e;
-  border-radius: 5px;
-  margin: 15px 0;
-  font-size: 12px;
-  max-height: 250px;
-  overflow-y: auto;
-}
-
-.bill {
-  border: 1px solid #ddd;
-  padding: 10px;
-  background: white;
-  border-radius: 3px;
-}
-
-.bill h3 {
-  text-align: center;
-  margin: 0 0 10px;
-}
-
-.bill h4 {
-  margin: 10px 0 5px;
-  font-size: 13px;
-}
-
-.bill p {
-  margin: 5px 0;
-  font-size: 11px;
-}
-
-.bill-items {
-  width: 100%;
-  border-collapse: collapse;
-  font-size: 11px;
-  margin: 10px 0;
-}
-
-.bill-items th,
-.bill-items td {
-  border: 1px solid #ddd;
-  padding: 5px;
-  text-align: left;
-}
-
-.bill-items th {
-  background: #f0f0f0;
-}
-
-.bill-total {
-  text-align: right;
-  margin: 10px 0;
-}
-
-.status-controls {
-  margin: 15px 0;
-}
-
-.status-controls select {
-  width: 100%;
-  padding: 10px;
-  border: 1px solid #ddd;
-  border-radius: 5px;
-  font-size: 14px;
+.order-items li:last-child {
+  border-bottom: none;
+  padding-bottom: 0;
 }
 
 .print-btn {
   width: 100%;
-  padding: 10px;
-  background: #2196f3;
-  color: white;
-  border: none;
-  border-radius: 5px;
+  padding: 0.5rem;
+  background: transparent;
+  color: var(--primary-color);
+  border: 1px solid var(--primary-color);
+  border-radius: var(--radius-pill);
   cursor: pointer;
-  margin-top: 10px;
+  font-family: var(--font-heading);
+  font-weight: 700;
+  font-size: 0.8rem;
+  transition: var(--transition-fast);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.3rem;
 }
 
 .print-btn:hover {
-  background: #0b7dda;
+  background: var(--primary-color);
+  color: white;
+  box-shadow: 0 4px 12px rgba(255, 107, 53, 0.3);
+  transform: translateY(-2px);
 }
 
-@media (max-width: 768px) {
-  .orders-grid {
-    grid-template-columns: 1fr;
-  }
-
-  .filter-section {
-    flex-direction: column;
-  }
-
-  .filter-section button {
-    width: 100%;
-  }
+.bill-preview {
+  display: none;
 }
 
+/* ================= PRINT STYLES ================= */
 @media print {
   body {
     background: white;
   }
 
-  .filter-section {
+  .admin-layout-sidebar,
+  .admin-header {
+    display: none !important;
+  }
+
+  .admin-layout-main {
+    margin: 0;
+    padding: 0;
+  }
+  
+  .admin-dashboard-content {
+    display: block;
+    height: auto;
+  }
+
+  .kanban-board {
+    display: block;
+  }
+
+  .kanban-column {
+    display: block;
+    border: none;
+    max-height: none;
+  }
+
+  .column-header,
+  .empty-column-placeholder {
     display: none;
   }
 
-  /* Hide all order cards by default when printing */
   .order-card {
     display: none;
   }
 
-  /* Show only the printing order card */
   .order-card.printing {
     display: block;
     box-shadow: none;
@@ -209,23 +322,65 @@
     border: none;
   }
 
-  /* Hide everything inside the printing order card EXCEPT the bill preview */
   .order-card.printing > *:not(.bill-preview) {
     display: none;
   }
 
   .bill-preview {
+    display: block;
     background: white;
     border: none;
     page-break-inside: avoid;
-    max-height: none;
-    overflow: visible;
     margin: 0;
     padding: 0;
+    font-family: 'Courier New', Courier, monospace;
   }
 
   .bill {
-    border: none;
-    padding: 0;
+    border: 1px solid #000;
+    padding: 20px;
+    width: 300px;
+    margin: 0 auto;
+  }
+
+  .bill h3, .bill h4 {
+    text-align: center;
+    margin: 10px 0;
+  }
+
+  .bill p {
+    margin: 5px 0;
+    font-size: 12px;
+  }
+
+  .bill-items {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 10px 0;
+    font-size: 12px;
+  }
+
+  .bill-items th, .bill-items td {
+    border-bottom: 1px dashed #000;
+    padding: 5px 0;
+  }
+
+  .bill-items th {
+    text-align: left;
+  }
+}
+
+@media (max-width: 768px) {
+  .admin-dashboard-content {
+    height: auto;
+  }
+  .kanban-board {
+    flex-direction: column;
+    overflow-x: hidden;
+  }
+  .kanban-column {
+    flex: none;
+    width: 100%;
+    max-height: 500px; /* Limit height so they are scrollable individually */
   }
 }
