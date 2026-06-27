@@ -15,6 +15,7 @@ import OfferManagement from "./components/OfferManagement"
 import ReviewManagement from "./components/ReviewManagement"
 import SpecialOfferManagement from "./components/SpecialOfferManagement"
 import ComboManagement from "./components/ComboManagement"
+import UserProfile from "./components/UserProfile"
 import { SocketProvider } from "./context/SocketContext"
 
 function ProtectedRoute({ component, role }) {
@@ -54,6 +55,7 @@ function App() {
           <Route path="/register" element={<RegisterPage />} />
           <Route path="/user-menu" element={<ProtectedRoute component={<UserMenuPage />} role="user" />} />
           <Route path="/checkout" element={<ProtectedRoute component={<Checkout />} role="user" />} />
+          <Route path="/my-profile" element={<ProtectedRoute component={<UserProfile />} role="user" />} />
           <Route path="/my-orders" element={<ProtectedRoute component={<UserOrders />} role="user" />} />
           <Route path="/my-reviews" element={<ProtectedRoute component={<UserReviews />} role="user" />} />
           <Route path="/admin-dashboard" element={<ProtectedRoute component={<AdminDashboard />} role="admin" />} />

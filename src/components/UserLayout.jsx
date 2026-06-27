@@ -41,8 +41,14 @@ function UserLayout({ children, title, subtitle, showCart = true, cartCount, onC
       <header className="user-header">
         <div className="user-header-content">
           <div className="user-header-info">
-            <h1>{title || "Little Cup Cafe"}</h1>
-            <p>{subtitle || `Welcome back, ${user?.name || "Guest"}`}</p>
+            <div className="user-header-text">
+              <h1>{title || "Little Cup Cafe"}</h1>
+              <p>{subtitle || `Welcome back, ${user?.name || "Guest"}`}</p>
+            </div>
+            {/* Mobile Profile Avatar */}
+            <div className="user-mobile-avatar" onClick={() => navigate("/my-profile")}>
+              {user?.name?.charAt(0).toUpperCase() || "U"}
+            </div>
           </div>
           <div className="user-header-buttons">
             {location.pathname !== "/user-menu" && (
@@ -72,9 +78,15 @@ function UserLayout({ children, title, subtitle, showCart = true, cartCount, onC
                 {displayCartCount > 0 && <span className="user-cart-badge">{displayCartCount}</span>}
               </button>
             )}
-            <button className="user-nav-pill-btn user-logout-btn" onClick={handleLogout}>
-              Logout
-            </button>
+            {location.pathname !== "/my-profile" && (
+              <button className="user-nav-pill-btn user-profile-btn" onClick={() => navigate("/my-profile")}>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" style={{width: '20px', height: '20px'}}>
+                  <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                  <circle cx="12" cy="7" r="4"></circle>
+                </svg>
+                Profile
+              </button>
+            )}
           </div>
         </div>
       </header>
