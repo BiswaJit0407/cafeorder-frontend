@@ -378,6 +378,46 @@ body.user-menu-active {
   box-shadow: 0 4px 12px rgba(255, 107, 53, 0.3);
 }
 
+.menu-quantity-controls {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: var(--bg-card);
+  border: 1px solid var(--primary-color);
+  border-radius: var(--radius-sm);
+  padding: 0.25rem;
+  font-family: var(--font-heading);
+  font-weight: 700;
+  color: var(--primary-color);
+}
+
+.menu-quantity-controls button {
+  width: 34px;
+  height: 34px;
+  background: rgba(255, 107, 53, 0.1);
+  border: none;
+  border-radius: var(--radius-sm);
+  color: var(--primary-color);
+  font-size: 1.2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: var(--transition-fast);
+}
+
+.menu-quantity-controls button:hover {
+  background: var(--primary-color);
+  color: white;
+}
+
+.menu-quantity-controls span {
+  font-size: 1.1rem;
+  flex: 1;
+  text-align: center;
+}
+
 /* ================= SPECIAL OFFERS CARDS ================= */
 .special-offer-card-user {
   background: linear-gradient(135deg, white 0%, #FFF5EF 100%);

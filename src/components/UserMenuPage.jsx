@@ -111,6 +111,11 @@ function UserMenuPage() {
     localStorage.setItem("cart", JSON.stringify(newCart))
   }
 
+  const getCartQuantity = (itemId) => {
+    const cartItem = cart.find(c => c._id === itemId);
+    return cartItem ? cartItem.quantity : 0;
+  }
+
   const updateQuantity = (itemId, quantity) => {
     if (quantity === 0) {
       removeFromCart(itemId)
@@ -214,16 +219,24 @@ function UserMenuPage() {
                       <span className="offer-price-user">₹{offer.offerPrice}</span>
                       <span className="discount-badge-user">{offer.discount}% OFF</span>
                     </div>
-                    <button 
-                      className="add-cart-btn"
-                      onClick={() => addToCart({ _id: offer.menuItemId, name: offer.name, price: offer.offerPrice, image: offer.image, isSpecialOffer: true, allowCoupons: false })}
-                    >
-                      <span>Add Offer</span>
-                      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                        <line x1="12" y1="5" x2="12" y2="19"></line>
-                        <line x1="5" y1="12" x2="19" y2="12"></line>
-                      </svg>
-                    </button>
+                    {getCartQuantity(offer.menuItemId) > 0 ? (
+                      <div className="menu-quantity-controls">
+                        <button onClick={() => updateQuantity(offer.menuItemId, getCartQuantity(offer.menuItemId) - 1)}>-</button>
+                        <span>{getCartQuantity(offer.menuItemId)}</span>
+                        <button onClick={() => updateQuantity(offer.menuItemId, getCartQuantity(offer.menuItemId) + 1)}>+</button>
+                      </div>
+                    ) : (
+                      <button 
+                        className="add-cart-btn"
+                        onClick={() => addToCart({ _id: offer.menuItemId, name: offer.name, price: offer.offerPrice, image: offer.image, isSpecialOffer: true, allowCoupons: false })}
+                      >
+                        <span>Add Offer</span>
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                          <line x1="12" y1="5" x2="12" y2="19"></line>
+                          <line x1="5" y1="12" x2="19" y2="12"></line>
+                        </svg>
+                      </button>
+                    )}
                   </div>
                 </div>
               ))}
@@ -241,13 +254,21 @@ function UserMenuPage() {
                       <span className="price">₹{item.price}</span>
                     </div>
                     <p className="description">{item.description}</p>
-                    <button className="add-cart-btn" onClick={() => addToCart(item)}>
-                      <span>Add to Cart</span>
-                      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                        <line x1="12" y1="5" x2="12" y2="19"></line>
-                        <line x1="5" y1="12" x2="19" y2="12"></line>
-                      </svg>
-                    </button>
+                    {getCartQuantity(item._id) > 0 ? (
+                      <div className="menu-quantity-controls">
+                        <button onClick={() => updateQuantity(item._id, getCartQuantity(item._id) - 1)}>-</button>
+                        <span>{getCartQuantity(item._id)}</span>
+                        <button onClick={() => updateQuantity(item._id, getCartQuantity(item._id) + 1)}>+</button>
+                      </div>
+                    ) : (
+                      <button className="add-cart-btn" onClick={() => addToCart(item)}>
+                        <span>Add to Cart</span>
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                          <line x1="12" y1="5" x2="12" y2="19"></line>
+                          <line x1="5" y1="12" x2="19" y2="12"></line>
+                        </svg>
+                      </button>
+                    )}
                   </div>
                 </div>
               ))}
